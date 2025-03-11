@@ -268,7 +268,7 @@ img {
 /* Counseling Styles */
 .counseling {
     width: 100%;
-    background: linear-gradient(to bottom, #393981, #534d83, #f5f5f5 50%, #ffffff);
+    background: linear-gradient(to bottom, #393981, #534d83, #f5f5f5 80%, #ffffff);
 }
 
 /* Header Counseling Section */
@@ -1070,7 +1070,7 @@ img {
     }
     
     .tracer-study-container {
-        padding: 30px;
+        padding: 55px;
         margin-top: 140px;
     }
     
