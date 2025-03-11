@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Pusat Karier - UIN Syarif Hidayatullah</title>
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- Inter Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="assets/style/styles.css">
+        <link rel="shortcut icon" href="assets/image/image.png" type="image/x-icon">
+    </head>
+<body>
+<!-- Navbar -->
+ <!-- Navigation -->
+ <nav class="nav-container">
+    <div class="logo">
+        <img src="assets/image/logo_navbar.png" alt="Pusat Karier Logo">
+    </div>
+    <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="search" class="search-box" placeholder="Search">
+    </div>
+    <div class="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="#" class="dropdown">Jobs</a>
+        <a href="#" class="dropdown">Community</a>
+        <a href="konseling.html">Counseling</a>
+        <a href="tracer-study.html">Tracer Study</a>
+        <a href="#">About Us</a>
+        <a href="#">Login</a>
+    </div>
+</nav>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+<div class="modal-content">
+    <div class="modal-header">
+        <img src="assets/image/logo_footbar.png" alt="Pusat Karier Logo">
+        <h1>Welcome back!</h1>
+        <p>Enter your Credentials to access your account</p>
+    </div>
+    <form>
+        <div class="form-group">
+            <label>Email address</label>
+            <input type="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Password">
+        </div>
+        <div class="remember-forgot">
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Remember me</label>
+            </div>
+            <a href="#" class="forgot-password">Forgot password</a>
+        </div>
+        <button type="submit" class="login-button">Login</button>
+        <p class="signup-prompt">
+            Don't have an account? <a href="#">Sign Up</a>
+        </p>
+    </form>
+</div>
+</div>
+
+
+<!-- Career -->
+    <div class="container">
+        <div class="section-title">
+            <h2>Career Advice</h2>
+            <p>Book a session with our professional career counselors</p>
+        </div>
+
+        <div class="counselors-container" id="counselors-container">
+            <!-- Counselors will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="booking-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-booking">&times;</span>
+            <h2 class="modal-title">Book a Career Advice Session</h2>
+            <form id="booking-form">
+                <input type="hidden" id="counselor-id">
+                <input type="hidden" id="session-type">
+
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Session Type</label>
+                    <div class="radio-options">
+                        <div class="radio-option">
+                            <input type="radio" id="session-online" name="session-type" value="online" checked>
+                            <label for="session-online">Online</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="session-offline" name="session-type" value="offline">
+                            <label for="session-offline">In-person</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="session-date">Date</label>
+                    <input type="date" id="session-date" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Time Slot</label>
+                    <div class="time-slots" id="time-slots">
+                        <div class="time-slot" data-time="09:00">09:00 AM</div>
+                        <div class="time-slot" data-time="10:00">10:00 AM</div>
+                        <div class="time-slot" data-time="11:00">11:00 AM</div>
+                        <div class="time-slot" data-time="13:00">01:00 PM</div>
+                        <div class="time-slot" data-time="14:00">02:00 PM</div>
+                        <div class="time-slot" data-time="15:00">03:00 PM</div>
+                        <div class="time-slot" data-time="16:00">04:00 PM</div>
+                        <div class="time-slot disabled" data-time="17:00">05:00 PM</div>
+                        <div class="time-slot" data-time="18:00">06:00 PM</div>
+                    </div>
+                    <input type="hidden" id="selected-time" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Additional Notes (Optional)</label>
+                    <textarea id="notes" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Invoice/Confirmation Modal -->
+    <div class="modal invoice-modal" id="invoice-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-invoice">&times;</span>
+            <h2 class="modal-title">Booking Confirmed!</h2>
+            
+            <div class="calendar-container">
+                <div class="calendar-icon">
+                    <div class="calendar-month" id="invoice-month">MAR</div>
+                    <div class="calendar-day" id="invoice-day">07</div>
+                </div>
+            </div>
+            
+            <!-- Receipt/invoice styling -->
+            <div class="receipt">
+                <div class="receipt-header">
+                    <h3>Booking Receipt</h3>
+                </div>
+                <div class="receipt-body">
+                    <div class="receipt-row">
+                        <span class="receipt-label">Counselor:</span>
+                        <span class="receipt-value" id="invoice-counselor">Dr. Ahmad Yusuf, SpKK</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Date:</span>
+                        <span class="receipt-value" id="invoice-date">March 7, 2025</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Time:</span>
+                        <span class="receipt-value" id="invoice-time">10:00 AM</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Session Type:</span>
+                        <span class="receipt-value" id="invoice-type">Online</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Booking ID:</span>
+                        <span class="receipt-value" id="invoice-id">CA-25030705</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Client Name:</span>
+                        <span class="receipt-value" id="invoice-client-name">-</span>
+                    </div>
+                </div>
+                <div class="receipt-footer">
+                    <div class="qr-code" id="receipt-qr">QR Code</div>
+                    <p>Present this receipt or booking ID when you arrive for your session</p>
+                </div>
+            </div>
+            
+            <div id="meeting-link-container" class="meeting-link" style="display: none;">
+                <p>Join your online session using this link:</p>
+                <a href="https://meet.google.com/abc-defg-hij" target="_blank" id="gmeet-link">https://meet.google.com/abc-defg-hij</a>
+                <p>Please join 5 minutes before your scheduled time.</p>
+            </div>
+            
+            <!-- Email notification preview -->
+            <div class="email-preview">
+                <div class="email-preview-header">
+                    <div class="email-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4.7l-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/>
+                        </svg>
+                    </div>
+                    <div class="email-preview-title">Email Confirmation Sent</div>
+                </div>
+                <div class="email-preview-content">
+                    <div class="email-subject">Your Career Advice Session has been confirmed</div>
+                    <div class="email-body">
+                        <p>Hello <span id="email-client-name">-</span>,</p>
+                        <p>Your career advice session has been successfully booked. We've added this appointment to your calendar.</p>
+                        <p>See attached receipt and calendar invitation.</p>
+                        <p>Thank you for choosing our Career Advice service!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary btn-block" id="close-confirmation" style="margin-top: 20px;">Done</button>
+        </div>
+    </div>
+
+    
+     <!-- Footer -->
+     <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="assets/image/logo_footbar.png" alt="Pusat Karier Logo">
+                </div>
+                <div class="footer-address">
+                    Alumni Center IKALUIN Jakarta<br>
+                    Jl. Kertamukti No.34, Pisangan, Kec. Ciputat Timur, Kota<br>
+                    Tangerang Selatan, Banten 15419
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/karieruinjakarta" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>What We Do</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Career Festival</a></li>
+                    <li><a href="#">Pekan Konseling</a></li>
+                    <li><a href="#">Tracer Study</a></li>
+                    <li><a href="#">PERSAMI</a></li>
+                    <li><a href="#">Company Visit</a></li>
+                    <li><a href="#">Growth Buddy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Institution</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Career</a></li>
+                    <li><a href="#">UIN Syarif Hidayatullah Jakarta</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Business</a></li>
+                </ul>
+                <div class="contact-info">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li>E-Mail: karir@uinjkt.ac.id</li>
+                        <li>Mobile Phone: +62 813 24306918</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            Copyright © 2024 KKN in Pusat Karier
+        </div>
+    </footer>
+
+    <script src="assets/script/script.js"></script>
+    <!-- End -->
+</body>
+</html>
