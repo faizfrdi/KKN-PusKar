@@ -23,7 +23,7 @@ img {
 
 /* Main Content Area */
 .main-content {
-    margin-top: 0px; /* Accounts for fixed navbar */
+    margin-top: 0; /* Accounts for fixed navbar */
     min-height: calc(100vh - 60px - 400px);
 }
 
@@ -108,32 +108,33 @@ img {
 .modal {
     display: none;
     position: fixed;
-    top: 0;
+    z-index: 999;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
+    overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease;
 }
 
 .modal.show {
-    display: flex;
+    display: block;
     opacity: 1;
 }
 
 .modal-content {
-    background-color: white;
-    padding: 3rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 500px;
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-50px);
+    transition: transform 0.3s ease;
     position: relative;
-    transform: scale(0.8);
-    opacity: 0;
 }
 
 @keyframes modalFadeIn {
@@ -705,6 +706,16 @@ img {
 }
 
 /* Booking form */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
 .form-control {
     width: 100%;
     padding: 12px;
@@ -1070,7 +1081,7 @@ img {
     }
     
     .tracer-study-container {
-        padding: 55px;
+        padding: 30px;
         margin-top: 140px;
     }
     
