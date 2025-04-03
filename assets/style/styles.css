@@ -417,7 +417,6 @@ img {
     text-decoration: none;
     border-radius: 25px;
     font-weight: bold;
-    margin-left: 100px;
     transition: background 0.3s ease;
 }
 
@@ -954,6 +953,295 @@ img {
     background-color: #2d2f7a;
 }
 
+/* Hero Section */
+.hero-section {
+    background-color: #f5f5f5;
+    padding: 100px 20px 60px;
+    margin-top: 60px;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: right;
+}
+
+.hero-image img {
+    max-width: 100%;
+    border-radius: 15px;
+}
+
+/* Partners Section */
+.partners-section {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.section-subtitle {
+    color: #666;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.partners-logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.partner-logo {
+    flex: 0 0 auto;
+}
+
+.partner-logo img {
+    max-height: 60px;
+}
+
+/* Services Section */
+.services-section {
+    padding: 60px 20px;
+    background-color: #f5f5f5;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.service-card {
+    background-color: #fff;
+    padding: 30px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-icon {
+    margin-bottom: 20px;
+}
+
+.service-icon img {
+    height: 50px;
+}
+
+.service-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* CTA Section - Career Center Head */
+.cta-section {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.cta-box {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.cta-image {
+    flex: 0 0 300px;
+}
+
+.cta-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cta-content {
+    flex: 1;
+    padding: 30px 30px 30px 0;
+}
+
+.cta-content h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cta-content p {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.cta-signature {
+    font-style: italic;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Latest Articles Section */
+.articles-section {
+    padding: 60px 20px;
+    background-color: #f5f5f5;
+}
+
+.articles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.more-link {
+    color: #393981;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.more-link i {
+    font-size: 0.8rem;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.article-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+}
+
+.article-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.article-content {
+    padding: 20px;
+}
+
+.article-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.article-category {
+    background-color: #e9eeff;
+    color: #393981;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Counseling CTA Section */
+.counseling-cta {
+    background-color: #393981;
+    padding: 60px 20px;
+}
+
+.counseling-cta-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.counseling-cta-content {
+    flex: 1;
+}
+
+.counseling-cta-content h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.counseling-cta-content p {
+    color: #e0e0e0;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.counseling-cta-image {
+    flex: 0 0 40%;
+    text-align: right;
+}
+
+.counseling-cta-image img {
+    max-width: 100%;
+    max-height: 250px;
+}
+
 /* Responsive Design */
 @media screen and (max-width: 1024px) {
     .nav-container {
@@ -999,9 +1287,38 @@ img {
     #booking-section img {
         margin-right: 50px;
     }
+
+    .hero-container,
+    .cta-box,
+    .counseling-cta-box {
+        flex-direction: column;
+    }
+    
+    .hero-content,
+    .hero-image,
+    .cta-content,
+    .cta-image,
+    .counseling-cta-content,
+    .counseling-cta-image {
+        flex: none;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .cta-content {
+        padding: 30px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
     .main-content {
         margin-top: 110px; /* Adjust for the wrap in navbar */
     }
