@@ -137,6 +137,125 @@ img {
     position: relative;
 }
 
+/* Success animation styling */
+.success-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    text-align: center;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    font-family: 'Inter', sans-serif;
+}
+
+.success-icon {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    background-color: #00d1a0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: scaleIn 0.5s ease-out forwards;
+}
+
+/* Fixed checkmark orientation and positioning */
+.checkmark {
+    width: 28px;
+    height: 50px;
+    border-bottom: 5px solid white;
+    border-right: 5px solid white;
+    margin-bottom: 10px; /* Adjust to center in circle */
+    transform: rotate(45deg) scale(0);
+    animation: checkmarkAnimation 0.5s ease-out 0.4s forwards;
+}
+
+.success-title {
+    font-size: 28px;
+    color: #5a6578;
+    margin: 15px 0 10px;
+    font-weight: 600;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.3s forwards;
+}
+
+.success-message {
+    font-size: 16px;
+    color: #858b96;
+    margin-bottom: 25px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.5s forwards;
+}
+
+.close-button {
+    background-color: #383B98;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.7s forwards;
+}
+
+.close-button:hover {
+    background-color: #c9d0da;
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fixed fadeIn animation for container */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes checkmarkAnimation {
+    from {
+        transform: rotate(45deg) scale(0);
+    }
+    to {
+        transform: rotate(45deg) scale(1);
+    }
+}
+
 @keyframes modalFadeIn {
     from {
         opacity: 0;
@@ -665,8 +784,9 @@ img {
 }
 
 .btn-primary {
-    background-color: #24388d;
-    color: white;
+    background-color:white;
+    color:#24388d;
+
 }
 
 .btn-primary:hover {
@@ -917,10 +1037,52 @@ img {
     font-size: 0.9rem;
 }
 
+.form-note {
+    margin: 5px 0 15px;
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+    background-color: rgba(0, 123, 255, 0.05);
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.back-btn {
+    background-color: #383B98;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #5a6268;
+}
+
 .radio-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.radio-option input[type="radio"] {
+    margin: 0;
 }
 
 .select-field {
@@ -955,9 +1117,14 @@ img {
 
 /* Hero Section */
 .hero-section {
-    background-color: #f5f5f5;
+    background-image: url('/assets/image/Logo/background-hero.png');
     padding: 100px 20px 60px;
     margin-top: 60px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    color: white;
 }
 
 .hero-container {
@@ -976,13 +1143,13 @@ img {
 .hero-content h1 {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #333;
+    color: #fff;
     margin-bottom: 20px;
 }
 
 .hero-content p {
     font-size: 1.1rem;
-    color: #666;
+    color: #fff;
     margin-bottom: 30px;
     line-height: 1.6;
 }

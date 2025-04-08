@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Pusat Karier - UIN Syarif Hidayatullah</title>
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- Inter Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="assets/style/styles.css">
+        <link rel="shortcut icon" href="assets/image/Logo/icon.png" type="image/x-icon">
+    </head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="logo">
+            <a href="index.html"><img src="assets/image/Logo/logo_navbar.png" alt="Pusat Karier Logo"></a>
+        </div>
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="search" class="search-box" placeholder="Search">
+        </div>
+        <div class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="#" class="dropdown">Jobs</a>
+            <a href="#" class="dropdown">Community</a>
+            <a href="konseling.html">Counseling</a>
+            <a href="tracer-study.html">Tracer Study</a>
+            <a href="#">About Us</a>
+            <a href="#">Login</a>
+        </div>
+    </nav>
+
+    <!-- Tracer Study Form Page 2 -->
+    <div class="tracer-study-container">
+        <div class="tracer-study-header">
+            <img src="assets/image/Logo/uin.png" alt="UIN Logo">
+            <h1>FORM TRACER STUDY</h1>
+        </div>
+
+        <form id="tracerStudyNextForm">
+            <div class="form-field">
+                <label>Alasan melanjutkan studi?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="reason-knowledge" name="study_reason" value="Menambah Wawasan" required>
+                        <label for="reason-knowledge">Menambah Wawasan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-skill" name="study_reason" value="Meningkatkan Keahlian">
+                        <label for="reason-skill">Meningkatkan Keahlian</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-trial" name="study_reason" value="Cita-cita">
+                        <label for="reason-trial">Cita-cita</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-job" name="study_reason" value="Mendapatkan Pekerjaan sesuai Keilmuan">
+                        <label for="reason-job">Mendapatkan Pekerjaan sesuai Keilmuan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-interest" name="study_reason" value="Minat">
+                        <label for="reason-interest">Minat</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-research" name="study_reason" value="Riset">
+                        <label for="reason-research">Riset</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-unemployed" name="study_reason" value="Belum mendapatkan Pekerjaan">
+                        <label for="reason-unemployed">Belum mendapatkan Pekerjaan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-other" name="study_reason" value="Gelar">
+                        <label for="reason-other">Gelar</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Sumber Biaya Kuliah?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="funding-parents" name="funding_source" value="Sepuruh Orang Tua" required>
+                        <label for="funding-parents">Sepuruh Orang Tua</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="funding-parents-partial" name="funding_source" value="Orang Tua">
+                        <label for="funding-parents-partial">Orang Tua</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="funding-scholarship" name="funding_source" value="Beasiswa">
+                        <label for="funding-scholarship">Beasiswa</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="funding-scholarship-partial" name="funding_source" value="Sepuruh Beasiswa">
+                        <label for="funding-scholarship-partial">Sepuruh Beasiswa</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="funding-workplace" name="funding_source" value="Tempat Kerja">
+                        <label for="funding-workplace">Tempat Kerja</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="funding-self" name="funding_source" value="Biaya Sendiri">
+                        <label for="funding-self">Biaya Sendiri</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Berapa lama waktu tunggu Anda mendapatkan pekerjaan/usaha pertama</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="time-lt6" name="waiting_time" value="<6 Bulan" required>
+                        <label for="time-lt6">&lt;6 Bulan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="time-6-12" name="waiting_time" value="6 - 12 Bulan">
+                        <label for="time-6-12">6 - 12 Bulan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="time-gt12" name="waiting_time" value=">12 Bulan">
+                        <label for="time-gt12">&gt;12 Bulan</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-note">
+                <p>Bila Anda sudah mendapatkan pekerjaan sebelum lulus, maka Anda dapat menulis jawaban <6 bulan.</p>
+            </div>
+
+            <div class="form-field">
+                <label>Apa bentuk perusahaan/instansi/institusi tempat Anda bekerja sekarang?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="work-gov" name="workplace_type" value="Instansi Pemerintah" required>
+                        <label for="work-gov">Instansi Pemerintah</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="work-state" name="workplace_type" value="BUMN/BUMD">
+                        <label for="work-state">BUMN/BUMD</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="work-multinational" name="workplace_type" value="Institusi/Organisasi Multilateral">
+                        <label for="work-multinational">Institusi/Organisasi Multilateral</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="work-ngo" name="workplace_type" value="Organisasi Non-profit/Lembaga Swadaya Masyarakat">
+                        <label for="work-ngo">Organisasi Non-profit/Lembaga Swadaya Masyarakat</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="work-private" name="workplace_type" value="Perusahaan Swasta">
+                        <label for="work-private">Perusahaan Swasta</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="work-entrepreneur" name="workplace_type" value="Wiraswasta/Perusahaan Sendiri">
+                        <label for="work-entrepreneur">Wiraswasta/Perusahaan Sendiri</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="work-education" name="workplace_type" value="Instansi Pendidikan">
+                        <label for="work-education">Instansi Pendidikan</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Nama instansi tempat kerja/usaha pertama Anda setelah lulus</label>
+                <input type="text" id="first-workplace" name="first_workplace" placeholder="Type here" required>
+            </div>
+
+            <div class="form-field">
+                <label>Posisi/jabatan Anda saat ini</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="position-staff" name="job_position" value="Staff" required>
+                        <label for="position-staff">Staff</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="position-supervisor" name="job_position" value="Supervisor">
+                        <label for="position-supervisor">Supervisor</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="position-owner" name="job_position" value="Owner/Pemilik">
+                        <label for="position-owner">Owner/Pemilik</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="position-manager" name="job_position" value="Manager">
+                        <label for="position-manager">Manager</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="position-director" name="job_position" value="Direktur">
+                        <label for="position-director">Direktur</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="position-intern" name="job_position" value="Magang">
+                        <label for="position-intern">Magang</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Perkiraan rata-rata penghasilan (take-home-pay) Anda per bulan saat ini</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="salary-1-3" name="salary_range" value="1 - 3 juta" required>
+                        <label for="salary-1-3">1 - 3 juta</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="salary-4-5" name="salary_range" value="4 - 5 juta">
+                        <label for="salary-4-5">4 - 5 juta</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="salary-gt5" name="salary_range" value="> 5 juta">
+                        <label for="salary-gt5">&gt; 5 juta</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Apakah Pekerjaan Anda sesuai dengan Program Studi?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="job-match-yes" name="job_match" value="Ya" required>
+                        <label for="job-match-yes">Ya</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="job-match-no" name="job_match" value="Tidak">
+                        <label for="job-match-no">Tidak</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="button" class="back-btn" id="backBtn">Back</button>
+                <button type="button" class="submit-btn" id="nextBtn">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="assets/image/Logo/logo_footbar.png" alt="Pusat Karier Logo">
+                <h1>Welcome back!</h1>
+                <p>Enter your Credentials to access your account</p>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input type="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Password">
+                </div>
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password</a>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+                <p class="signup-prompt">
+                    Don't have an account? <a href="#">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <a href="index.html"><img src="assets/image/Logo/logo_footbar.png" alt="Pusat Karier Logo"></a>
+                </div>
+                <div class="footer-address">
+                    Alumni Center IKALUIN Jakarta<br>
+                    Jl. Kertamukti No.34, Pisangan, Kec. Ciputat Timur, Kota<br>
+                    Tangerang Selatan, Banten 15419
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/karieruinjakarta" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>What We Do</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Career Festival</a></li>
+                    <li><a href="konseling.html">Pekan Konseling</a></li>
+                    <li><a href="tracer-study.html">Tracer Study</a></li>
+                    <li><a href="#">PERSAMI</a></li>
+                    <li><a href="#">Company Visit</a></li>
+                    <li><a href="#">Growth Buddy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Institution</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Career</a></li>
+                    <li><a href="#">UIN Syarif Hidayatullah Jakarta</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Business</a></li>
+                </ul>
+                <div class="contact-info">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li>E-Mail: karir@uinjkt.ac.id</li>
+                        <li>Mobile Phone: +62 813 24306918</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            Copyright © 2024 KKN in Pusat Karier
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="assets/script/script.js"></script>
+    <script>
+        // Navigation between tracer study pages
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu initialization
+            function initMobileMenu() {
+                // Periksa apakah menu toggle sudah ada
+                if (document.querySelector('.menu-toggle')) {
+                    return; // Jika sudah ada, jangan buat lagi
+                }
+                
+                // Create and append the menu toggle button
+                const navContainer = document.querySelector('.nav-container');
+                const navMenu = document.querySelector('.nav-menu');
+                
+                if (!navContainer || !navMenu) {
+                    console.error('Nav container or menu not found!');
+                    return;
+                }
+                
+                const menuToggle = document.createElement('div');
+                menuToggle.className = 'menu-toggle';
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                // Insert before the search container
+                const searchContainer = document.querySelector('.search-container');
+                if (searchContainer) {
+                    navContainer.insertBefore(menuToggle, searchContainer);
+                } else {
+                    navContainer.appendChild(menuToggle);
+                }
+                
+                // Toggle menu when clicked
+                menuToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    // Change icon
+                    const icon = this.querySelector('i');
+                    if (navMenu.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navMenu.contains(e.target) && !menuToggle.contains(e.target) && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        menuToggle.querySelector('i').className = 'fas fa-bars';
+                    }
+                });
+                
+                // Close menu when window is resized beyond mobile breakpoint
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 640 && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        menuToggle.querySelector('i').className = 'fas fa-bars';
+                    }
+                });
+            }
+            
+            // Run mobile menu initialization
+            initMobileMenu();
+            
+            // Second page "Back" button functionality
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    // Go back to the first page
+                    window.location.href = 'tracer-study.html';
+                });
+            }
+            
+            // Second page "Next" button functionality for final submission
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    const form = document.getElementById('tracerStudyNextForm');
+                    if (form && form.checkValidity()) {
+                        // Combine form data from both pages
+                        const formData = new FormData(form);
+                        const combinedData = {};
+                        
+                        // Get data from sessionStorage (first page)
+                        for (let key in sessionStorage) {
+                            if (sessionStorage.hasOwnProperty(key)) {
+                                combinedData[key] = sessionStorage.getItem(key);
+                            }
+                        }
+                        
+                        // Add data from second page
+                        for (let [key, value] of formData.entries()) {
+                            combinedData[key] = value;
+                        }
+                        
+                        // Here you would normally submit the data to your server
+                        // For this example, we'll just redirect to a third page
+                        window.location.href = 'tracer-study-final.html';
+                    } else if (form) {
+                        // Trigger browser's native validation UI
+                        form.reportValidity();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
