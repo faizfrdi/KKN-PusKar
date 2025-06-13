@@ -790,7 +790,7 @@ img {
 }
 
 .btn-primary:hover {
-    background-color: #1a2a6c;
+    background-color: #f0f0f0;
 }
 
 .btn-outline {
@@ -1117,7 +1117,7 @@ img {
 
 /* Hero Section */
 .hero-section {
-    background-image: url('/assets/image/Logo/background-hero.png');
+    background-color: #393981;
     padding: 100px 20px 60px;
     margin-top: 60px;
     background-size: cover;
@@ -1261,7 +1261,7 @@ img {
 }
 
 .cta-image {
-    flex: 0 0 300px;
+    flex: 0 0 500px;
 }
 
 .cta-image img {
