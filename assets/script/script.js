@@ -427,3 +427,208 @@ window.addEventListener('click', (e) => {
         invoiceModal.classList.remove('show');
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Feedback widget initializing...');
+    
+    // Get elements
+    const widgetToggle = document.getElementById('feedbackWidgetToggle');
+    const widgetMenu = document.getElementById('feedbackWidgetMenu');
+    const feedbackModal = document.getElementById('feedbackModal');
+    const feedbackCloseBtn = document.getElementById('feedbackCloseBtn');
+    const feedbackForm = document.getElementById('feedbackForm');
+    
+    console.log('Widget elements:', {
+        widgetToggle: !!widgetToggle,
+        widgetMenu: !!widgetMenu,
+        feedbackModal: !!feedbackModal
+    });
+
+    if (!widgetToggle || !widgetMenu || !feedbackModal) {
+        console.error('Feedback widget elements not found!');
+        return;
+    }
+
+    // Toggle widget menu
+    widgetToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Widget toggle clicked');
+        
+        widgetMenu.classList.toggle('active');
+        widgetToggle.classList.toggle('active');
+    });
+
+    // Close widget menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.feedback-floating-widget')) {
+            widgetMenu.classList.remove('active');
+            widgetToggle.classList.remove('active');
+        }
+    });
+
+    // Handle widget option clicks
+    const widgetOptions = document.querySelectorAll('.feedback-widget-option');
+    widgetOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const action = this.getAttribute('data-action');
+            console.log('Widget option clicked:', action);
+            
+            switch(action) {
+                case 'feedback':
+                    openFeedbackModal();
+                    break;
+                case 'whatsapp':
+                    openWhatsApp();
+                    break;
+                case 'email':
+                    openEmail();
+                    break;
+            }
+        });
+    });
+
+    // Feedback Modal Functions
+    function openFeedbackModal() {
+        console.log('Opening feedback modal');
+        feedbackModal.classList.add('active');
+        widgetMenu.classList.remove('active');
+        widgetToggle.classList.remove('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeFeedbackModal() {
+        console.log('Closing feedback modal');
+        feedbackModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        // Reset form
+        document.getElementById('feedbackFormContainer').style.display = 'block';
+        document.getElementById('feedbackSuccessMessage').style.display = 'none';
+        if (feedbackForm) feedbackForm.reset();
+        clearStarRating();
+    }
+
+    // Close modal events
+    if (feedbackCloseBtn) {
+        feedbackCloseBtn.addEventListener('click', closeFeedbackModal);
+    }
+
+    feedbackModal.addEventListener('click', function(event) {
+        if (event.target === feedbackModal) {
+            closeFeedbackModal();
+        }
+    });
+
+    // Star Rating System
+    const stars = document.querySelectorAll('.feedback-star');
+    const ratingInput = document.getElementById('feedbackRatingInput');
+
+    if (stars.length > 0 && ratingInput) {
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.getAttribute('data-rating');
+                ratingInput.value = rating;
+                updateStarDisplay(rating);
+                console.log('Rating selected:', rating);
+            });
+
+            star.addEventListener('mouseover', function() {
+                const rating = this.getAttribute('data-rating');
+                updateStarDisplay(rating);
+            });
+        });
+
+        const ratingGroup = document.querySelector('.feedback-rating-group');
+        if (ratingGroup) {
+            ratingGroup.addEventListener('mouseleave', function() {
+                const currentRating = ratingInput.value;
+                updateStarDisplay(currentRating);
+            });
+        }
+    }
+
+    function updateStarDisplay(rating) {
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+    }
+
+    function clearStarRating() {
+        stars.forEach(star => {
+            star.classList.remove('active');
+        });
+        if (ratingInput) ratingInput.value = '';
+    }
+
+    // Submit Feedback
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            console.log('Feedback form submitted');
+            
+            // Show loading state
+            const submitBtn = this.querySelector('.feedback-submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Hide form and show success message
+                document.getElementById('feedbackFormContainer').style.display = 'none';
+                document.getElementById('feedbackSuccessMessage').style.display = 'block';
+
+                // Auto close after 3 seconds
+                setTimeout(() => {
+                    closeFeedbackModal();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
+            }, 1500);
+        });
+    }
+
+
+
+    function openWhatsApp() {
+        console.log('Opening WhatsApp');
+        const phoneNumber = '6281324306918';
+        const message = 'Hello, I need assistance regarding Pusat Karier UIN Jakarta services.';
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, '_blank');
+        widgetMenu.classList.remove('active');
+        widgetToggle.classList.remove('active');
+    }
+
+    function openEmail() {
+        console.log('Opening email');
+        const email = 'karir@uinjkt.ac.id';
+        const subject = 'Support Request - Pusat Karier UIN Jakarta';
+        const body = 'Hello,\n\nI need assistance with...\n\nThank you.';
+        const mailtoURL = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoURL;
+        widgetMenu.classList.remove('active');
+        widgetToggle.classList.remove('active');
+    }
+
+    // Keyboard accessibility
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            if (feedbackModal.classList.contains('active')) {
+                closeFeedbackModal();
+            } else if (widgetMenu.classList.contains('active')) {
+                widgetMenu.classList.remove('active');
+                widgetToggle.classList.remove('active');
+            }
+        }
+    });
+
+    console.log('Feedback widget initialized successfully!');
+});
