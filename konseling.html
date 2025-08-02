@@ -11,6 +11,397 @@
         <!-- Custom CSS -->
         <link rel="stylesheet" href="assets/style/styles.css">
         <link rel="shortcut icon" href="assets/image/Logo/icon.png" type="image/x-icon">
+        <style>
+/* Floating Widget Styles - dengan namespace khusus */
+.feedback-floating-widget {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 99999 !important;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Main Floating Button */
+.feedback-widget-toggle {
+    width: 60px !important;
+    height: 60px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-radius: 50% !important;
+    border: none !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    animation: feedbackPulse 2s infinite;
+    position: relative !important;
+}
+
+.feedback-widget-toggle:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6) !important;
+}
+
+.feedback-widget-toggle i {
+    color: white !important;
+    font-size: 24px !important;
+    transition: transform 0.3s ease !important;
+}
+
+.feedback-widget-toggle.active i {
+    transform: rotate(45deg) !important;
+}
+
+@keyframes feedbackPulse {
+    0% {
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6), 0 0 0 10px rgba(102, 126, 234, 0.1);
+    }
+    100% {
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    }
+}
+
+/* Widget Menu */
+.feedback-widget-menu {
+    position: absolute !important;
+    bottom: 80px !important;
+    right: 0 !important;
+    width: 300px !important;
+    background: white !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(20px) scale(0.8) !important;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+    overflow: hidden !important;
+}
+
+.feedback-widget-menu.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+.feedback-widget-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    padding: 20px !important;
+    text-align: center !important;
+}
+
+.feedback-widget-header h3 {
+    margin: 0 0 5px 0 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: white !important;
+}
+
+.feedback-widget-header p {
+    margin: 0 !important;
+    font-size: 14px !important;
+    opacity: 0.9 !important;
+    color: white !important;
+}
+
+.feedback-widget-options {
+    padding: 0 !important;
+}
+
+.feedback-widget-option {
+    display: flex !important;
+    align-items: center !important;
+    padding: 15px 20px !important;
+    border: none !important;
+    background: none !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    text-align: left !important;
+}
+
+.feedback-widget-option:hover {
+    background: #f8f9ff !important;
+    transform: translateX(5px) !important;
+}
+
+.feedback-widget-option:last-child {
+    border-bottom: none !important;
+}
+
+.feedback-widget-option-icon {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 15px !important;
+    font-size: 18px !important;
+    flex-shrink: 0 !important;
+}
+
+.feedback-icon {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52) !important;
+    color: white !important;
+}
+
+
+
+.whatsapp-icon {
+    background: linear-gradient(135deg, #25d366, #128c7e) !important;
+    color: white !important;
+}
+
+.email-icon {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+}
+
+.feedback-widget-option-content h4 {
+    margin: 0 0 3px 0 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+.feedback-widget-option-content p {
+    margin: 0 !important;
+    font-size: 12px !important;
+    color: #666 !important;
+}
+
+/* Feedback Modal */
+.feedback-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.feedback-modal.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.feedback-modal-content {
+    background: white !important;
+    border-radius: 15px !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    transform: scale(0.8) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.feedback-modal.active .feedback-modal-content {
+    transform: scale(1) !important;
+}
+
+.feedback-modal-header {
+    padding: 25px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border-radius: 15px 15px 0 0 !important;
+    position: relative !important;
+}
+
+.feedback-modal-header h3 {
+    margin: 0 !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: white !important;
+}
+
+.feedback-close {
+    position: absolute !important;
+    top: 15px !important;
+    right: 20px !important;
+    background: none !important;
+    border: none !important;
+    color: white !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    padding: 5px !important;
+    border-radius: 50% !important;
+    transition: background 0.3s ease !important;
+}
+
+.feedback-close:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.feedback-form-container {
+    padding: 25px !important;
+}
+
+.feedback-form-container .form-group {
+    margin-bottom: 20px !important;
+}
+
+.feedback-form-container .form-group label {
+    display: block !important;
+    margin-bottom: 8px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+}
+
+.feedback-form-container .form-group input,
+.feedback-form-container .form-group textarea,
+.feedback-form-container .form-group select {
+    width: 100% !important;
+    padding: 12px !important;
+    border: 2px solid #e1e5e9 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    transition: border-color 0.3s ease !important;
+    font-family: inherit !important;
+    box-sizing: border-box !important;
+}
+
+.feedback-form-container .form-group input:focus,
+.feedback-form-container .form-group textarea:focus,
+.feedback-form-container .form-group select:focus {
+    outline: none !important;
+    border-color: #667eea !important;
+}
+
+.feedback-form-container .form-group textarea {
+    resize: vertical !important;
+    min-height: 100px !important;
+}
+
+.feedback-rating-group {
+    display: flex !important;
+    gap: 5px !important;
+    align-items: center !important;
+}
+
+.feedback-star {
+    font-size: 24px !important;
+    color: #ddd !important;
+    cursor: pointer !important;
+    transition: color 0.3s ease !important;
+}
+
+.feedback-star.active,
+.feedback-star:hover {
+    color: #ffd700 !important;
+}
+
+.feedback-submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 30px !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+}
+
+.feedback-submit-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3) !important;
+}
+
+/* Quick Contact Info */
+.feedback-quick-contact {
+    background: #f8f9ff !important;
+    padding: 20px !important;
+    margin-top: 20px !important;
+    border-radius: 8px !important;
+}
+
+.feedback-quick-contact h4 {
+    margin: 0 0 15px 0 !important;
+    color: #333 !important;
+    font-size: 16px !important;
+}
+
+.feedback-contact-item {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+    font-size: 14px !important;
+    color: #666 !important;
+}
+
+.feedback-contact-item i {
+    margin-right: 10px !important;
+    width: 20px !important;
+    color: #667eea !important;
+}
+
+/* Success Animation */
+.feedback-success-animation {
+    text-align: center !important;
+    padding: 40px 25px !important;
+}
+
+.feedback-success-icon {
+    width: 80px !important;
+    height: 80px !important;
+    background: linear-gradient(135deg, #4ecdc4, #44a08d) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto 20px !important;
+    animation: feedbackSuccessPulse 0.6s ease-out;
+}
+
+.feedback-success-icon i {
+    color: white !important;
+    font-size: 36px !important;
+}
+
+@keyframes feedbackSuccessPulse {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.feedback-success-message h3 {
+    color: #333 !important;
+    margin: 0 0 10px 0 !important;
+}
+
+.feedback-success-message p {
+    color: #666 !important;
+    margin: 0 !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .feedback-widget-menu {
+        width: 280px !important;
+        right: -10px !important;
+    }
+
+    .feedback-modal-content {
+        margin: 20px !important;
+        width: calc(100% - 40px) !important;
+    }
+}
+</style>
     </head>
     <body>
         <!-- Navigation -->
@@ -157,7 +548,141 @@
         Copyright © 2024 KKN in Pusat Karier
     </div>
 </footer>
+<!-- Floating Widget -->
+<div class="feedback-floating-widget">
+    <!-- Main Toggle Button -->
+    <button class="feedback-widget-toggle" id="feedbackWidgetToggle" type="button">
+        <i class="fas fa-comment-dots"></i>
+    </button>
 
+    <!-- Widget Menu -->
+    <div class="feedback-widget-menu" id="feedbackWidgetMenu">
+        <div class="feedback-widget-header">
+            <h3>Need Help?</h3>
+            <p>We're here to assist you!</p>
+        </div>
+        
+        <div class="feedback-widget-options">
+            <button class="feedback-widget-option" type="button" data-action="feedback">
+                <div class="feedback-widget-option-icon feedback-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="feedback-widget-option-content">
+                    <h4>Give Feedback</h4>
+                    <p>Share your experience with us</p>
+                </div>
+            </button>
+
+
+
+            <button class="feedback-widget-option" type="button" data-action="whatsapp">
+                <div class="feedback-widget-option-icon whatsapp-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="feedback-widget-option-content">
+                    <h4>WhatsApp</h4>
+                    <p>Message us on WhatsApp</p>
+                </div>
+            </button>
+
+            <button class="feedback-widget-option" type="button" data-action="email">
+                <div class="feedback-widget-option-icon email-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="feedback-widget-option-content">
+                    <h4>Email Support</h4>
+                    <p>Send us an email</p>
+                </div>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Feedback Modal -->
+<div class="feedback-modal" id="feedbackModal">
+    <div class="feedback-modal-content">
+        <div class="feedback-modal-header">
+            <h3>We Value Your Feedback</h3>
+            <button class="feedback-close" id="feedbackCloseBtn" type="button">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="feedback-form-container" id="feedbackFormContainer">
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Feedback Type</label>
+                    <select name="type" required>
+                        <option value="">Select feedback type</option>
+                        <option value="general">General Feedback</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="feature">Feature Request</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="compliment">Compliment</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Overall Rating</label>
+                    <div class="feedback-rating-group">
+                        <span class="feedback-star" data-rating="1">★</span>
+                        <span class="feedback-star" data-rating="2">★</span>
+                        <span class="feedback-star" data-rating="3">★</span>
+                        <span class="feedback-star" data-rating="4">★</span>
+                        <span class="feedback-star" data-rating="5">★</span>
+                    </div>
+                    <input type="hidden" name="rating" id="feedbackRatingInput">
+                </div>
+
+                <div class="form-group">
+                    <label>Your Feedback</label>
+                    <textarea name="message" placeholder="Please share your thoughts, suggestions, or report any issues..." required></textarea>
+                </div>
+
+                <button type="submit" class="feedback-submit-btn">
+                    Submit Feedback
+                </button>
+            </form>
+
+            <div class="feedback-quick-contact">
+                <h4>Other Ways to Reach Us</h4>
+                <div class="feedback-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>karir@uinjkt.ac.id</span>
+                </div>
+                <div class="feedback-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+62 813 24306918</span>
+                </div>
+                <div class="feedback-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Jl. Kertamukti No.34, Pisangan, Ciputat Tim.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div class="feedback-success-animation" id="feedbackSuccessMessage" style="display: none;">
+            <div class="feedback-success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="feedback-success-message">
+                <h3>Thank You!</h3>
+                <p>Your feedback has been submitted successfully. We'll review it and get back to you soon.</p>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Custom JavaScript -->
 <script src="assets/script/script.js"></script>
 </body>
