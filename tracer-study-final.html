@@ -7,223 +7,11 @@
         <!-- Font Awesome for icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <!-- Inter Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="assets/style/styles.css">
         <link rel="shortcut icon" href="assets/image/Logo/icon.png" type="image/x-icon">
         <style>
-            /* Main Content */
-            .tracer-study-hero {
-                text-align: center;
-                padding: 6rem 2rem 4rem 2rem;
-                color: black;
-                margin-top: 2rem;
-            }
-
-            .hero-logo img {
-                height: 50px;
-            }
-
-            .hero-title {
-                margin-bottom: 1rem;
-                font-size: 2.5rem;
-                font-weight: 700;
-                color: black;
-            }
-
-            .hero-subtitle {
-                max-width: 600px;
-                margin: 0 auto;
-                line-height: 1.6;
-                font-size: 1.1rem;
-                margin-bottom: 30px;
-                line-height: 1.6;
-            }
-
-            /* Content Section */
-            .content-container {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 4rem 2rem;
-                background: white;
-                margin-top: -2rem;
-                border-radius: 20px 20px 0 0;
-                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
-                position: relative;
-                z-index: 10;
-            }
-
-            .info-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
-                margin-bottom: 3rem;
-            }
-
-            .info-card {
-                background: linear-gradient(135deg, #f8fafc, #e2e8f0);
-                padding: 2rem;
-                border-radius: 15px;
-                border-left: 5px solid #393981;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
-
-            .info-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            }
-
-            .info-card h3 {
-                color: #393981;
-                font-size: 1.3rem;
-                margin-bottom: 1rem;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .info-card p {
-                color: #393981;
-                line-height: 1.7;
-                font-size: 0.95rem;
-            }
-
-            .info-card ul {
-                color: #393981;
-                line-height: 1.7;
-                padding-left: 1.2rem;
-            }
-
-            .info-card ul li {
-                margin-bottom: 0.5rem;
-            }
-
-            /* CTA Section */
-            .cta-section {
-                background: #393981;
-                padding: 3rem;
-                border-radius: 20px;
-                text-align: center;
-                margin: 3rem 0;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .cta-konten {
-                position: relative;
-                z-index: 2;
-                color: white;
-            }
-
-            .cta-judul {
-                font-size: 2 rem;
-                font-weight: 700;
-                margin-bottom: 1rem;
-                color: white;
-            }
-
-            .cta-deskripsi{
-                font-size: 1 rem;
-                margin-bottom: 2rem;
-                max-width: 600px;
-                margin-left: auto;
-                margin-right: auto;
-                color: white;
-            }
-
-            .cta-button {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-                background: white;
-                color: #667eea;
-                padding: 1rem 2.5rem;
-                border: none;
-                border-radius: 50px;
-                font-size: 1.1rem;
-                font-weight: 600;
-                text-decoration: none;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            }
-
-            .cta-button:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-                background: #f8fafc;
-            }
-
-            /* Features Section */
-            .features-section {
-                background: #f8fafc;
-                padding: 3rem;
-                border-radius: 20px;
-                margin: 2rem 0;
-            }
-
-            .features-title {
-                text-align: center;
-                font-size: 2rem;
-                color: #334155;
-                margin-bottom: 2rem;
-                font-weight: 600;
-            }
-
-            .features-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 1.5rem;
-            }
-
-            .feature-item {
-                background: white;
-                padding: 1.5rem;
-                border-radius: 10px;
-                text-align: center;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-                transition: transform 0.3s ease;
-            }
-
-            .feature-item:hover {
-                transform: translateY(-3px);
-            }
-
-            .feature-icon {
-                font-size: 2.5rem;
-                color: #393981;
-                margin-bottom: 1rem;
-            }
-
-            .feature-item h4 {
-                color: #334155;
-                margin-bottom: 0.5rem;
-                font-weight: 600;
-            }
-
-            .feature-item p {
-                color: #64748b;
-                font-size: 0.9rem;
-            }
-
-            /* Mobile Responsive */
-            @media (max-width: 768px) {
-                .hero-title {
-                    font-size: 2rem;
-                }
-
-                .content-container {
-                    padding: 2rem 1rem;
-                }
-
-                .cta-title {
-                    font-size: 1.8rem;
-                }
-
-                .cta-section {
-                    padding: 2rem 1rem;
-                }
-            }
 /* Floating Widget Styles - dengan namespace khusus */
 .feedback-floating-widget {
     position: fixed !important;
@@ -636,109 +424,173 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="tracer-study-hero">
-        <h1 class="hero-title">TRACER STUDY</h1>
-        <p class="hero-subtitle">
-            Studi Penelusuran Alumni untuk Mengukur Kualitas Pendidikan dan Relevansi Kurikulum dengan Dunia Kerja
-        </p>
-    </section>
-
-    <!-- Main Content -->
-    <div class="content-container">
-        <!-- Information Grid -->
-        <div class="info-grid">
-            <div class="info-card">
-                <h3><i class="fas fa-question-circle"></i>Apa itu Tracer Study?</h3>
-                <p>
-                    Tracer Study adalah studi penelusuran alumni yang bertujuan untuk mengumpulkan informasi 
-                    mengenai kondisi dan situasi alumni setelah lulus dari perguruan tinggi. Studi ini dilakukan 
-                    untuk mengetahui sejauh mana alumni dapat mengaplikasikan ilmu yang diperoleh selama kuliah 
-                    dalam dunia kerja atau kehidupan sehari-hari.
-                </p>
-            </div>
-
-            <div class="info-card">
-                <h3><i class="fas fa-bullseye"></i>Tujuan Tracer Study</h3>
-                <ul>
-                    <li>Mengukur relevansi kurikulum dengan kebutuhan dunia kerja</li>
-                    <li>Mengevaluasi kualitas pendidikan yang telah diberikan</li>
-                    <li>Mendapatkan feedback untuk perbaikan sistem pendidikan</li>
-                    <li>Mengetahui posisi dan perkembangan karier alumni</li>
-                    <li>Membangun jejaring dan database alumni yang kuat</li>
-                </ul>
-            </div>
-
-            <div class="info-card">
-                <h3><i class="fas fa-users"></i>Siapa yang Harus Mengisi?</h3>
-                <p>
-                    Tracer Study ditujukan untuk seluruh alumni UIN Syarif Hidayatullah Jakarta dari berbagai 
-                    fakultas dan program studi, baik lulusan baru maupun alumni yang telah lama lulus. 
-                    Partisipasi Anda sangat berharga untuk kemajuan almamater.
-                </p>
-            </div>
-
-            <div class="info-card">
-                <h3><i class="fas fa-chart-line"></i>Manfaat untuk Alumni</h3>
-                <ul>
-                    <li>Mendapatkan informasi lowongan kerja terbaru</li>
-                    <li>Terhubung dengan sesama alumni</li>
-                    <li>Mengakses program pengembangan karier</li>
-                    <li>Berkontribusi pada peningkatan kualitas pendidikan</li>
-                    <li>Mendapatkan sertifikat partisipasi</li>
-                </ul>
-            </div>
+    <!-- Tracer Study Form Page 3 (Final) -->
+    <div class="tracer-study-container">
+        <div class="tracer-study-header">
+            <img src="assets/image/Logo/uin.png" alt="UIN Logo">
+            <h1>FORM TRACER STUDY</h1>
         </div>
 
-        <!-- Features Section -->
-        <div class="features-section">
-            <h2 class="features-title">Mengapa Partisipasi Anda Penting?</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-graduation-cap"></i>
+        <form id="tracerStudyFinalForm">
+            <div class="form-field">
+                <label>Apa alasan utama Anda saat ini belum bekerja?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="reason-searching" name="unemployment_reason" value="Sedang mencari pekerjaan tetapi belum mendapat tawaran" required>
+                        <label for="reason-searching">Sedang mencari pekerjaan tetapi belum mendapat tawaran</label>
                     </div>
-                    <h4>Peningkatan Kualitas</h4>
-                    <p>Data Anda membantu universitas meningkatkan kualitas pendidikan untuk adik-adik angkatan</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-handshake"></i>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-newgrad" name="unemployment_reason" value="Baru saja lulus">
+                        <label for="reason-newgrad">Baru saja lulus</label>
                     </div>
-                    <h4>Kerjasama Industri</h4>
-                    <p>Informasi karier alumni membantu membangun kemitraan dengan industri</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-network-wired"></i>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-family" name="unemployment_reason" value="Mengurus keluarga">
+                        <label for="reason-family">Mengurus keluarga</label>
                     </div>
-                    <h4>Jejaring Alumni</h4>
-                    <p>Memperkuat jaringan alumni untuk saling mendukung dalam karier</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-trophy"></i>
+                    <div class="radio-option">
+                        <input type="radio" id="reason-health" name="unemployment_reason" value="Masalah kesehatan">
+                        <label for="reason-health">Masalah kesehatan</label>
                     </div>
-                    <h4>Prestasi Bersama</h4>
-                    <p>Pencapaian alumni menjadi kebanggaan dan motivasi bagi civitas akademika</p>
                 </div>
             </div>
-        </div>
 
-        <!-- Call to Action Section -->
-        <div class="cta-section">
-            <div class="cta-konten">
-                <h2 class="cta-judul">Siap Berkontribusi?</h2>
-                <p class="cta-deskripsi">
-                    Luangkan waktu 5-10 menit untuk mengisi form tracer study dan menjadi bagian dari 
-                    kemajuan UIN Syarif Hidayatullah Jakarta. Setiap data yang Anda berikan sangat berharga!
-                </p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdbQRwB67zvXQu40hvbmyVt5IjJVOMi6kl-L7R3OLa8cWNIpg/viewform" 
-                   target="_blank" class="cta-button">
-                    <i class="fas fa-edit"></i>
-                    Isi Form Tracer Study Sekarang
-                </a>
+            <div class="form-field">
+                <label>Jika Anda sedang mencari pekerjaan, sudah berapa lama Anda mencari pekerjaan?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="job-search-lt1" name="job_search_duration" value="Kurang dari 1 bulan" required>
+                        <label for="job-search-lt1">Kurang dari 1 bulan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="job-search-1-3" name="job_search_duration" value="1-3 bulan">
+                        <label for="job-search-1-3">1-3 bulan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="job-search-4-6" name="job_search_duration" value="4-6 bulan">
+                        <label for="job-search-4-6">4-6 bulan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="job-search-7-12" name="job_search_duration" value="7-12 bulan">
+                        <label for="job-search-7-12">7-12 bulan</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="job-search-gt1y" name="job_search_duration" value="Lebih dari 1 tahun">
+                        <label for="job-search-gt1y">Lebih dari 1 tahun</label>
+                    </div>
+                </div>
             </div>
+
+            <div class="form-field">
+                <label>Apa kendala utama yang Anda hadapi dalam mencari pekerjaan? (Pilih semua yang sesuai)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="challenge-jobs" name="job_challenges" value="Kurangnya lowongan kerja di bidang saya">
+                        <label for="challenge-jobs">Kurangnya lowongan kerja di bidang saya</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="challenge-experience" name="job_challenges" value="Kurangnya pengalaman kerja">
+                        <label for="challenge-experience">Kurangnya pengalaman kerja</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="challenge-qualification" name="job_challenges" value="Kurangnya kualifikasi atau pendidikan">
+                        <label for="challenge-qualification">Kurangnya kualifikasi atau pendidikan</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="challenge-location" name="job_challenges" value="Lokasi pekerjaan yang tidak sesuai">
+                        <label for="challenge-location">Lokasi pekerjaan yang tidak sesuai</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="challenge-salary" name="job_challenges" value="Upah atau gaji yang tidak sesuai">
+                        <label for="challenge-salary">Upah atau gaji yang tidak sesuai</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="challenge-competition" name="job_challenges" value="Persaingan yang tinggi">
+                        <label for="challenge-competition">Persaingan yang tinggi</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Apakah Anda sedang mengikuti pelatihan atau kursus untuk meningkatkan keterampilan Anda?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="training-yes" name="attending_training" value="Ya" required>
+                        <label for="training-yes">Ya</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="training-no" name="attending_training" value="Tidak">
+                        <label for="training-no">Tidak</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Jika ya, pelatihan atau kursus apa yang Anda ikuti? (contoh: kursus komputer, bahasa, manajemen, dll.)</label>
+                <input type="text" id="training-type" name="training_type" placeholder="Type here">
+            </div>
+
+            <div class="form-field">
+                <label>Seberapa optimis Anda bahwa Anda akan mendapatkan pekerjaan dalam 6 bulan ke depan?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="outlook-very-optimistic" name="job_outlook" value="Sangat optimis" required>
+                        <label for="outlook-very-optimistic">Sangat optimis</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="outlook-optimistic" name="job_outlook" value="Optimis">
+                        <label for="outlook-optimistic">Optimis</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="outlook-unsure" name="job_outlook" value="Tidak yakin">
+                        <label for="outlook-unsure">Tidak yakin</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="outlook-pessimistic" name="job_outlook" value="Pesimis">
+                        <label for="outlook-pessimistic">Pesimis</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="outlook-very-pessimistic" name="job_outlook" value="Sangat pesimis">
+                        <label for="outlook-very-pessimistic">Sangat pesimis</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="button" class="back-btn" id="backBtn">Back</button>
+                <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="assets/image/Logo/logo_footbar.png" alt="Pusat Karier Logo">
+                <h1>Welcome back!</h1>
+                <p>Enter your Credentials to access your account</p>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input type="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Password">
+                </div>
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password</a>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+                <p class="signup-prompt">
+                    Don't have an account? <a href="#">Sign Up</a>
+                </p>
+            </form>
         </div>
     </div>
 
@@ -940,13 +792,16 @@
     <!-- Custom JavaScript -->
     <script src="assets/script/script.js"></script>
     <script>
-        // Mobile menu functionality from your original script
+        // Navigation between tracer study pages
         document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu initialization
             function initMobileMenu() {
+                // Check if menu toggle already exists
                 if (document.querySelector('.menu-toggle')) {
-                    return;
+                    return; // If it exists, don't create it again
                 }
                 
+                // Create and append the menu toggle button
                 const navContainer = document.querySelector('.nav-container');
                 const navMenu = document.querySelector('.nav-menu');
                 
@@ -959,6 +814,7 @@
                 menuToggle.className = 'menu-toggle';
                 menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
                 
+                // Insert before the search container
                 const searchContainer = document.querySelector('.search-container');
                 if (searchContainer) {
                     navContainer.insertBefore(menuToggle, searchContainer);
@@ -966,8 +822,10 @@
                     navContainer.appendChild(menuToggle);
                 }
                 
+                // Toggle menu when clicked
                 menuToggle.addEventListener('click', function() {
                     navMenu.classList.toggle('active');
+                    // Change icon
                     const icon = this.querySelector('i');
                     if (navMenu.classList.contains('active')) {
                         icon.className = 'fas fa-times';
@@ -976,6 +834,7 @@
                     }
                 });
                 
+                // Close menu when clicking outside
                 document.addEventListener('click', function(e) {
                     if (!navMenu.contains(e.target) && !menuToggle.contains(e.target) && navMenu.classList.contains('active')) {
                         navMenu.classList.remove('active');
@@ -983,6 +842,7 @@
                     }
                 });
                 
+                // Close menu when window is resized beyond mobile breakpoint
                 window.addEventListener('resize', function() {
                     if (window.innerWidth > 640 && navMenu.classList.contains('active')) {
                         navMenu.classList.remove('active');
@@ -990,22 +850,62 @@
                     }
                 });
             }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initMobileMenu);
-            } else {
-                initMobileMenu();
+            
+            // Run mobile menu initialization
+            initMobileMenu();
+            
+            // Final page "Back" button functionality
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    // Go back to the second page
+                    window.location.href = 'tracer-study-next.html';
+                });
+            }
+            
+            // Final page "Submit" button functionality
+            // Updated success animation container creation
+            function showSuccessMessage() {
+                // Hide the form container
+                document.querySelector('.tracer-study-container').style.display = 'none';
+                
+                // Create success animation container
+                const successContainer = document.createElement('div');
+                successContainer.className = 'success-container';
+                successContainer.innerHTML = `
+                    <div class="success-icon">
+                        <div class="checkmark"></div>
+                    </div>
+                    <h1 class="success-title">Success</h1>
+                    <p class="success-message">Form successfully submitted</p>
+                    <button class="close-button">Close</button>
+                `;
+                
+                // Add container to body
+                document.body.appendChild(successContainer);
+                
+                // Add event listener for close button
+                successContainer.querySelector('.close-button').addEventListener('click', function() {
+                    window.location.href = 'index.html';
+                });
             }
 
-            window.addEventListener('load', initMobileMenu);
-
-            // Smooth scroll for CTA button
-            document.querySelector('.cta-button').addEventListener('click', function(e) {
-                // Add smooth transition effect before redirect
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 150);
-            });
+                // Use this in your submit button event listener
+                document.getElementById('submitBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                    
+                if (document.getElementById('tracerStudyFinalForm').checkValidity()) {
+                    // Process your form data here
+                    console.log('Form submitted successfully');
+                        
+                    // Show success message with fixed animation
+                    showSuccessMessage();
+                } else {
+                    // Trigger browser's native validation
+                    document.getElementById('tracerStudyFinalForm').reportValidity();
+                    }
+                });                    
         });
     </script>
+</body>
+</html>
