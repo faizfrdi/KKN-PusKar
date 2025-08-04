@@ -33,6 +33,7 @@ class ModalManager {
             }
         });
     }
+    
 }
 
 // ===========================================
@@ -682,12 +683,24 @@ const FeedbackWidget = {
 // MAIN INITIALIZATION
 // ===========================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all modules
-    LoginModal.init();
-    MobileMenu.init();
-    CounselorManager.init();
-    BookingManager.init();
-    FeedbackWidget.init();
-    
-    console.log('All modules initialized successfully!');
+     LoginModal.init(); // JANGAN inisialisasi di sini!
+     MobileMenu.init(); // JANGAN inisialisasi di sini!
+     CounselorManager.init();
+     BookingManager.init();
+     FeedbackWidget.init();
+     console.log('All modules initialized successfully!');
+ });
+
+
+// ===========================================
+// DROPDOWN MENU
+// ===========================================
+const dropdowns = document.querySelectorAll('.nav-menu .dropdown');
+
+dropdowns.forEach(dropdown => {
+    dropdown.addEventListener('click', (e) => {
+        e.preventDefault();
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+        dropdownContent.classList.toggle('active');
+    });
 });
