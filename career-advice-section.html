@@ -13,59 +13,9 @@
         <link rel="shortcut icon" href="assets/image/Logo/icon.png" type="image/x-icon">
     </head>
 <body>
-<!-- Navbar -->
- <!-- Navigation -->
- <nav class="nav-container">
-    <div class="logo">
-        <img src="assets/image/Logo/logo_navbar.png" alt="Pusat Karier Logo">
-    </div>
-    <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
-        <input type="search" class="search-box" placeholder="Search">
-    </div>
-    <div class="nav-menu">
-        <a href="index.html">Home</a>
-        <a href="#" class="dropdown">Jobs</a>
-        <a href="#" class="dropdown">Community</a>
-        <a href="konseling.html">Counseling</a>
-        <a href="tracer-study.html">Tracer Study</a>
-        <a href="about-us.html">About Us</a>
-        <a href="#">Login</a>
-    </div>
-</nav>
+<div id="header-container"></div>
 
-<!-- Login Modal -->
-<div id="loginModal" class="modal">
-<div class="modal-content">
-    <div class="modal-header">
-        <img src="assets/image/Logo/logo_footbar.png" alt="Pusat Karier Logo">
-        <h1>Welcome back!</h1>
-        <p>Enter your Credentials to access your account</p>
-    </div>
-    <form>
-        <div class="form-group">
-            <label>Email address</label>
-            <input type="email" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" placeholder="Password">
-        </div>
-        <div class="remember-forgot">
-            <div class="remember-me">
-                <input type="checkbox" id="remember">
-                <label for="remember">Remember me</label>
-            </div>
-            <a href="#" class="forgot-password">Forgot password</a>
-        </div>
-        <button type="submit" class="login-button">Login</button>
-        <p class="signup-prompt">
-            Don't have an account? <a href="#">Sign Up</a>
-        </p>
-    </form>
-</div>
-</div>
-
+<div id="login-modal-container"></div>
 
 <!-- Career -->
     <div class="container">
@@ -229,202 +179,20 @@
         </div>
     </div>
 
-    
-     <!-- Footer -->
-     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <div class="footer-logo">
-                    <img src="assets/image/Logo/logo_footbar.png" alt="Pusat Karier Logo">
-                </div>
-                <div class="footer-address">
-                    Alumni Center IKALUIN Jakarta<br>
-                    Jl. Kertamukti No.34, Pisangan, Kec. Ciputat Timur, Kota<br>
-                    Tangerang Selatan, Banten 15419
-                </div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="https://instagram.com/karieruinjakarta" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h3>What We Do</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Career Festival</a></li>
-                    <li><a href="#">Pekan Konseling</a></li>
-                    <li><a href="#">Tracer Study</a></li>
-                    <li><a href="#">PERSAMI</a></li>
-                    <li><a href="#">Company Visit</a></li>
-                    <li><a href="#">Growth Buddy</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Institution</h3>
-                <ul class="footer-links">
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Career</a></li>
-                    <li><a href="#">UIN Syarif Hidayatullah Jakarta</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Support</h3>
-                <ul class="footer-links">
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Business</a></li>
-                </ul>
-                <div class="contact-info">
-                    <h3>Contact</h3>
-                    <ul class="footer-links">
-                        <li>E-Mail: karir@uinjkt.ac.id</li>
-                        <li>Mobile Phone: +62 813 24306918</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            Copyright © 2024 KKN in Pusat Karier
-        </div>
-    </footer>
-    <!-- Floating Widget -->
-<div class="feedback-floating-widget">
-    <!-- Main Toggle Button -->
-    <button class="feedback-widget-toggle" id="feedbackWidgetToggle" type="button">
-        <i class="fas fa-comment-dots"></i>
-    </button>
+    <div id="feedback-modal-container"></div>
 
-    <!-- Widget Menu -->
-    <div class="feedback-widget-menu" id="feedbackWidgetMenu">
-        <div class="feedback-widget-header">
-            <h3>Need Help?</h3>
-            <p>We're here to assist you!</p>
-        </div>
-        
-        <div class="feedback-widget-options">
-            <button class="feedback-widget-option" type="button" data-action="feedback">
-                <div class="feedback-widget-option-icon feedback-icon">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="feedback-widget-option-content">
-                    <h4>Give Feedback</h4>
-                    <p>Share your experience with us</p>
-                </div>
-            </button>
-
-
-
-            <button class="feedback-widget-option" type="button" data-action="whatsapp">
-                <div class="feedback-widget-option-icon whatsapp-icon">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
-                <div class="feedback-widget-option-content">
-                    <h4>WhatsApp</h4>
-                    <p>Message us on WhatsApp</p>
-                </div>
-            </button>
-
-            <button class="feedback-widget-option" type="button" data-action="email">
-                <div class="feedback-widget-option-icon email-icon">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="feedback-widget-option-content">
-                    <h4>Email Support</h4>
-                    <p>Send us an email</p>
-                </div>
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Feedback Modal -->
-<div class="feedback-modal" id="feedbackModal">
-    <div class="feedback-modal-content">
-        <div class="feedback-modal-header">
-            <h3>We Value Your Feedback</h3>
-            <button class="feedback-close" id="feedbackCloseBtn" type="button">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="feedback-form-container" id="feedbackFormContainer">
-            <form id="feedbackForm">
-                <div class="form-group">
-                    <label>Your Name</label>
-                    <input type="text" name="name" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Feedback Type</label>
-                    <select name="type" required>
-                        <option value="">Select feedback type</option>
-                        <option value="general">General Feedback</option>
-                        <option value="bug">Bug Report</option>
-                        <option value="feature">Feature Request</option>
-                        <option value="complaint">Complaint</option>
-                        <option value="compliment">Compliment</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Overall Rating</label>
-                    <div class="feedback-rating-group">
-                        <span class="feedback-star" data-rating="1">★</span>
-                        <span class="feedback-star" data-rating="2">★</span>
-                        <span class="feedback-star" data-rating="3">★</span>
-                        <span class="feedback-star" data-rating="4">★</span>
-                        <span class="feedback-star" data-rating="5">★</span>
-                    </div>
-                    <input type="hidden" name="rating" id="feedbackRatingInput">
-                </div>
-
-                <div class="form-group">
-                    <label>Your Feedback</label>
-                    <textarea name="message" placeholder="Please share your thoughts, suggestions, or report any issues..." required></textarea>
-                </div>
-
-                <button type="submit" class="feedback-submit-btn">
-                    Submit Feedback
-                </button>
-            </form>
-
-            <div class="feedback-quick-contact">
-                <h4>Other Ways to Reach Us</h4>
-                <div class="feedback-contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>karir@uinjkt.ac.id</span>
-                </div>
-                <div class="feedback-contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>+62 813 24306918</span>
-                </div>
-                <div class="feedback-contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Jl. Kertamukti No.34, Pisangan, Ciputat Tim.</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Success Message -->
-        <div class="feedback-success-animation" id="feedbackSuccessMessage" style="display: none;">
-            <div class="feedback-success-icon">
-                <i class="fas fa-check"></i>
-            </div>
-            <div class="feedback-success-message">
-                <h3>Thank You!</h3>
-                <p>Your feedback has been submitted successfully. We'll review it and get back to you soon.</p>
-            </div>
-        </div>
-    </div>
-</div>
+    <div id="footer-container"></div>
+    <!-- Custom JavaScript -->
     <script src="assets/script/script.js"></script>
+    <script src="assets/script/loadHeaderFooter.js"></script>
+    <script>
+    loadHeaderFooter(function() {
+        if (typeof LoginModal !== 'undefined' && LoginModal.init) LoginModal.init();
+        if (typeof MobileMenu !== 'undefined' && MobileMenu.init) MobileMenu.init();
+        if (typeof CounselorManager !== 'undefined' && CounselorManager.init) CounselorManager.init();
+        if (typeof BookingManager !== 'undefined' && BookingManager.init) BookingManager.init();
+        if (typeof FeedbackWidget !== 'undefined' && FeedbackWidget.init) FeedbackWidget.init();
+    });
+    </script>
 </body>
 </html>
