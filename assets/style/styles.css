@@ -1,4 +1,6 @@
-/* Base styles */
+/* ==============================================
+   BASE STYLES & RESET
+   ============================================== */
 * {
     margin: 0;
     padding: 0;
@@ -6,32 +8,53 @@
     font-family: 'Inter', sans-serif;
 }
 
-html {
-    font-size: 16px;
+html { font-size: 16px; }
+body { overflow-x: hidden; background-color: #f5f5f5; color: #333; }
+img { max-width: 100%; height: auto; }
+
+/* ==============================================
+   ANIMATIONS & KEYFRAMES
+   ============================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-body {
-    overflow-x: hidden;
-    background-color: #f5f5f5;
-    color: #333;
+@keyframes scaleIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
 }
 
-img {
-    max-width: 100%;
-    height: auto;
+@keyframes checkmarkAnimation {
+    from { transform: rotate(45deg) scale(0); }
+    to { transform: rotate(45deg) scale(1); }
 }
 
-/* Main Content Area */
-.main-content {
-    margin-top: 0; /* Accounts for fixed navbar */
-    min-height: calc(100vh - 60px - 400px);
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-.main {
-    padding: 20px;
+@keyframes modalFadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.8); }
 }
 
-/* Navigation Styles */
+@keyframes feedbackPulse {
+    0% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); }
+    50% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6), 0 0 0 10px rgba(102, 126, 234, 0.1); }
+    100% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); }
+}
+
+@keyframes feedbackSuccessPulse {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* ==============================================
+   NAVIGATION & HEADER
+   ============================================== */
 .nav-container {
     background-color: #393981;
     padding: 0.8rem 4rem;
@@ -44,9 +67,7 @@ img {
     z-index: 1000;
 }
 
-.logo img {
-    height: 50px;
-}
+.logo img { height: 50px; }
 
 .search-container {
     position: relative;
@@ -82,11 +103,8 @@ img {
     font-weight: 500;
 }
 
-.nav-menu a:hover {
-    color: #e0e0e0;
-}
+.nav-menu a:hover { color: #e0e0e0; }
 
-/* Dropdown styles */
 .nav-menu .dropdown {
     position: relative;
     display: inline-block;
@@ -99,12 +117,285 @@ img {
     color: white;
 }
 
-/* Mobile menu toggle - hidden by default */
-.menu-toggle {
-    display: none;
+.menu-toggle { display: none; }
+
+/* ==============================================
+   MAIN CONTENT AREAS
+   ============================================== */
+.main-content {
+    margin-top: 0;
+    min-height: calc(100vh - 60px - 400px);
 }
 
-/* Modal styles */
+.main { padding: 20px; }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+
+/* ==============================================
+   HERO SECTIONS
+   ============================================== */
+.hero-section {
+    background-color: #393981;
+    padding: 100px 20px 60px;
+    margin-top: 60px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    color: white;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: right;
+}
+
+.hero-image img {
+    max-width: 100%;
+    border-radius: 15px;
+}
+
+/* ==============================================
+   FORMS & INPUTS
+   ============================================== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-group input::placeholder { color: #aaa; }
+.form-control:focus { outline: none; border-color: #24388d; }
+
+.form-field {
+    margin-bottom: 20px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="tel"],
+.form-field input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.form-note {
+    margin: 5px 0 15px;
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+    background-color: rgba(0, 123, 255, 0.05);
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-option,
+.radio-options {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.radio-options { gap: 20px; }
+.radio-option input { margin: 0; }
+.radio-option input[type="radio"] { margin-right: 8px; }
+
+.select-field {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+/* ==============================================
+   BUTTONS
+   ============================================== */
+.btn {
+    padding: 12px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: white;
+    color: #24388d;
+}
+
+.btn-primary:hover { background-color: #f0f0f0; }
+
+.btn-outline {
+    background-color: white;
+    color: #24388d;
+    border: 1px solid #24388d;
+}
+
+.btn-outline:hover { background-color: #e9eeff; }
+
+.btn-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.login-button,
+.submit-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #383B98;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button {
+    margin-bottom: 2rem;
+}
+
+.submit-btn {
+    padding: 12px 24px;
+    float: right;
+}
+
+.login-button:hover,
+.submit-btn:hover {
+    background-color: #2d2f7a;
+}
+
+.back-btn {
+    background-color: #383B98;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover { background-color: #5a6268; }
+
+.register-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: white;
+    color: #3B347D;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.register-button:hover { background: #f0f0f0; }
+
+.close-button {
+    background-color: #383B98;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.7s forwards;
+}
+
+.close-button:hover { background-color: #c9d0da; }
+
+/* ==============================================
+   MODALS
+   ============================================== */
 .modal {
     display: none;
     position: fixed;
@@ -137,7 +428,51 @@ img {
     position: relative;
 }
 
-/* Success animation styling */
+.modal.show .modal-content { animation: modalFadeIn 0.3s forwards; }
+.modal.hiding .modal-content { animation: modalFadeOut 0.3s forwards; }
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.modal-header img {
+    width: 200px;
+    margin-bottom: 2rem;
+}
+
+.modal-header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.modal-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.modal-title {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    color: #24388d;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #777;
+}
+
+.close-modal:hover { color: #333; }
+
+/* ==============================================
+   SUCCESS ANIMATIONS
+   ============================================== */
 .success-container {
     width: 100%;
     max-width: 400px;
@@ -169,13 +504,12 @@ img {
     animation: scaleIn 0.5s ease-out forwards;
 }
 
-/* Fixed checkmark orientation and positioning */
 .checkmark {
     width: 28px;
     height: 50px;
     border-bottom: 5px solid white;
     border-right: 5px solid white;
-    margin-bottom: 10px; /* Adjust to center in circle */
+    margin-bottom: 10px;
     transform: rotate(45deg) scale(0);
     animation: checkmarkAnimation 0.5s ease-out 0.4s forwards;
 }
@@ -197,201 +531,131 @@ img {
     animation: fadeIn 0.5s ease 0.5s forwards;
 }
 
-.close-button {
-    background-color: #383B98;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s;
-    opacity: 0;
-    animation: fadeIn 0.5s ease 0.7s forwards;
-}
-
-.close-button:hover {
-    background-color: #c9d0da;
-}
-
-/* Animation keyframes */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Fixed fadeIn animation for container */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        transform: scale(0);
-    }
-    to {
-        transform: scale(1);
-    }
-}
-
-@keyframes checkmarkAnimation {
-    from {
-        transform: rotate(45deg) scale(0);
-    }
-    to {
-        transform: rotate(45deg) scale(1);
-    }
-}
-
-@keyframes modalFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes modalFadeOut {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-}
-
-.modal.show .modal-content {
-    animation: modalFadeIn 0.3s forwards;
-}
-
-.modal.hiding .modal-content {
-    animation: modalFadeOut 0.3s forwards;
-}
-
-.modal-header {
+/* ==============================================
+   SECTION LAYOUTS
+   ============================================== */
+.section-title {
     text-align: center;
-    margin-bottom: 2rem;
-}
-
-.modal-header img {
-    width: 200px;
-    margin-bottom: 2rem;
-}
-
-.modal-header h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.modal-header p {
-    color: #666;
-    font-size: 1.1rem;
-}
-
-/* Form styles */
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.form-group input[type="email"],
-.form-group input[type="password"] {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-.form-group input::placeholder {
-    color: #aaa;
-}
-
-.remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.remember-me {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.remember-me input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #383B98;
-}
-
-.forgot-password {
-    color: #383B98;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.login-button {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #383B98;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    margin-bottom: 2rem;
-    transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-    background-color: #2d2f7a;
-}
-
-.signup-prompt {
-    text-align: center;
+    margin: 30px 0;
     color: #333;
+    position: relative;
 }
 
-.signup-prompt a {
-    color: #383B98;
-    text-decoration: none;
-    font-weight: 500;
+.section-title h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
 }
 
-/* Counseling Styles */
+.section-title p {
+    font-size: 16px;
+    color: #666;
+}
+
+.section-subtitle {
+    color: #666;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+/* Partners Section */
+.partners-section {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.partners-logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.partner-logo {
+    flex: 0 0 auto;
+}
+
+.partner-logo img {
+    max-height: 60px;
+}
+
+/* Services Section */
+.services-section {
+    padding: 60px 20px;
+    background-color: #f5f5f5;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.service,
+.service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.service:hover,
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service img {
+    max-width: 50%;
+    border-radius: 20px;
+}
+
+.service h2 {
+    color: #3B347D;
+    margin-bottom: 1rem;
+}
+
+.service p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.service-card {
+    padding: 30px 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.service-icon {
+    margin-bottom: 20px;
+}
+
+.service-icon img {
+    height: 50px;
+}
+
+.service-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* ==============================================
+   COUNSELING SECTIONS
+   ============================================== */
 .counseling {
     width: 100%;
     background: linear-gradient(to bottom, #393981, #534d83, #f5f5f5 80%, #ffffff);
 }
 
-/* Header Counseling Section */
 #header-counseling {
     max-width: 1200px;
     margin: 0 auto;
@@ -423,7 +687,6 @@ img {
     border-radius: 20px;
 }
 
-/* Counseling Services Section */
 #counseling-services {
     max-width: 1200px;
     margin: 0 auto;
@@ -433,35 +696,6 @@ img {
     gap: 2rem;
 }
 
-.service {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.service:hover {
-    transform: translateY(-5px);
-}
-
-.service img {
-    max-width: 50%;
-    border-radius: 20px;
-}
-
-.service h2 {
-    color: #3B347D;
-    margin-bottom: 1rem;
-}
-
-.service p {
-    color: #666;
-    font-size: 0.9rem;
-}
-
-/* Counseling Methods Section */
 #counseling-methods {
     max-width: 1200px;
     margin: 0 auto;
@@ -528,147 +762,15 @@ img {
     margin-left: 100px;
 }
 
-.register-button {
-    display: inline-block;
-    padding: 0.8rem 2rem;
-    background: white;
-    color: #3B347D;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: background 0.3s ease;
-}
-
-.register-button:hover {
-    background: #f0f0f0;
-}
-
 #booking-section img {
     max-width: 25%;
     border-radius: 20px;
     margin-right: 100px;
 }
 
-/* Footer Styles */
-.footer {
-    background-color: white;
-    padding: 4rem 6rem;
-}
-
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 4rem;
-}
-
-.footer-logo {
-    margin-bottom: 1.5rem;
-}
-
-.footer-logo img {
-    height: 50px;
-}
-
-.footer-address {
-    color: #555;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-}
-
-.footer-section h3 {
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 1.2rem;
-    font-weight: 600;
-}
-
-.footer-links {
-    list-style: none;
-}
-
-.footer-links li {
-    margin-bottom: 0.8rem;
-}
-
-.footer-links a {
-    color: #555;
-    text-decoration: none;
-    font-size: 14px;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: #383B98;
-}
-
-.social-links {
-    display: flex;
-    gap: 0.8rem;
-}
-
-.social-links a {
-    background-color: #383B98;
-    color: white;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.social-links a:hover {
-    background-color: #2d2f7a;
-}
-
-.contact-info {
-    margin-top: 2rem;
-}
-
-.contact-info li {
-    color: #555;
-    font-size: 14px;
-}
-
-.copyright {
-    text-align: center;
-    padding: 1rem;
-    color: #666;
-    font-size: 13px;
-    margin-top: 3rem;
-}
-
-/* Counselors Section */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 30px;
-}
-
-.section-title {
-    text-align: center;
-    margin: 30px 0;
-    color: #333;
-    position: relative;
-}
-
-.section-title h2 {
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-.section-title p {
-    font-size: 16px;
-    color: #666;
-}
-
+/* ==============================================
+   COUNSELORS SECTION
+   ============================================== */
 .counselors-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -764,104 +866,9 @@ img {
     margin-left: 10px;
 }
 
-.btn-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.btn {
-    padding: 12px 15px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
-    text-align: center;
-    transition: background-color 0.3s;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-primary {
-    background-color:white;
-    color:#24388d;
-
-}
-
-.btn-primary:hover {
-    background-color: #f0f0f0;
-}
-
-.btn-outline {
-    background-color: white;
-    color: #24388d;
-    border: 1px solid #24388d;
-}
-
-.btn-outline:hover {
-    background-color: #e9eeff;
-}
-
-/* Booking modal */
-.modal-title {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    color: #24388d;
-}
-
-.close-modal {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    font-size: 28px;
-    cursor: pointer;
-    color: #777;
-}
-
-.close-modal:hover {
-    color: #333;
-}
-
-/* Booking form */
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.form-control {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: #24388d;
-}
-
-.radio-options {
-    display: flex;
-    gap: 20px;
-}
-
-.radio-option {
-    display: flex;
-    align-items: center;
-}
-
-.radio-option input {
-    margin-right: 8px;
-}
-
+/* ==============================================
+   TIME SLOTS & SCHEDULING
+   ============================================== */
 .time-slots {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -896,7 +903,40 @@ img {
     border-color: #eee;
 }
 
-/* Invoice/confirmation modal */
+.calendar-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.calendar-icon {
+    width: 70px;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.calendar-month {
+    background-color: #24388d;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 0;
+}
+
+.calendar-day {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    padding: 10px 0;
+}
+
+/* ==============================================
+   BOOKING & INVOICE MODALS
+   ============================================== */
 .invoice-modal .modal-content {
     max-width: 500px;
 }
@@ -950,44 +990,9 @@ img {
     text-decoration: underline;
 }
 
-.btn-block {
-    display: block;
-    width: 100%;
-}
-
-/* Calendar icon */
-.calendar-container {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.calendar-icon {
-    width: 70px;
-    height: 70px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: inline-flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.calendar-month {
-    background-color: #24388d;
-    color: white;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 0;
-}
-
-.calendar-day {
-    font-size: 28px;
-    font-weight: 700;
-    color: #333;
-    padding: 10px 0;
-}
-
-/* Tracer Study Form */
+/* ==============================================
+   TRACER STUDY FORM
+   ============================================== */
 .tracer-study-container {
     max-width: 800px;
     margin: 120px auto 50px;
@@ -1014,238 +1019,15 @@ img {
     font-weight: 600;
 }
 
-.form-field {
-    margin-bottom: 20px;
-}
-
-.form-field label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    color: #333;
-}
-
-.form-field input[type="text"],
-.form-field input[type="email"],
-.form-field input[type="tel"],
-.form-field input[type="number"] {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 0.9rem;
-}
-
-.form-note {
-    margin: 5px 0 15px;
-    font-size: 0.85rem;
-    color: #555;
-    line-height: 1.4;
-    background-color: rgba(0, 123, 255, 0.05);
-    padding: 10px;
-    border-radius: 4px;
-    border-left: 3px solid #007bff;
-}
-
 .form-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.back-btn {
-    background-color: #383B98;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.back-btn:hover {
-    background-color: #5a6268;
-}
-
-.radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.radio-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.radio-option input[type="radio"] {
-    margin: 0;
-}
-
-.select-field {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 16px;
-}
-
-.submit-btn {
-    background-color: #383B98;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    float: right;
-    transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-    background-color: #2d2f7a;
-}
-
-/* Hero Section */
-.hero-section {
-    background-color: #393981;
-    padding: 100px 20px 60px;
-    margin-top: 60px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
-    color: white;
-}
-
-.hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-}
-
-.hero-content {
-    flex: 1;
-}
-
-.hero-content h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-.hero-content p {
-    font-size: 1.1rem;
-    color: #fff;
-    margin-bottom: 30px;
-    line-height: 1.6;
-}
-
-.hero-image {
-    flex: 1;
-    text-align: right;
-}
-
-.hero-image img {
-    max-width: 100%;
-    border-radius: 15px;
-}
-
-/* Partners Section */
-.partners-section {
-    padding: 60px 20px;
-    background-color: #fff;
-}
-
-.section-title {
-    font-size: 1.8rem;
-    color: #333;
-    margin-bottom: 10px;
-    text-align: left;
-}
-
-.section-subtitle {
-    color: #666;
-    margin-bottom: 40px;
-    text-align: left;
-}
-
-.partners-logo {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 60px;
-    flex-wrap: wrap;
-}
-
-.partner-logo {
-    flex: 0 0 auto;
-}
-
-.partner-logo img {
-    max-height: 60px;
-}
-
-/* Services Section */
-.services-section {
-    padding: 60px 20px;
-    background-color: #f5f5f5;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.service-card {
-    background-color: #fff;
-    padding: 30px 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
-}
-
-.service-card:hover {
-    transform: translateY(-5px);
-}
-
-.service-icon {
-    margin-bottom: 20px;
-}
-
-.service-icon img {
-    height: 50px;
-}
-
-.service-card h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.service-card p {
-    color: #666;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-/* CTA Section - Career Center Head */
+/* ==============================================
+   CTA SECTIONS
+   ============================================== */
 .cta-section {
     padding: 60px 20px;
     background-color: #fff;
@@ -1294,7 +1076,47 @@ img {
     color: #333;
 }
 
-/* Latest Articles Section */
+.counseling-cta {
+    background-color: #393981;
+    padding: 60px 20px;
+}
+
+.counseling-cta-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.counseling-cta-content {
+    flex: 1;
+}
+
+.counseling-cta-content h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.counseling-cta-content p {
+    color: #e0e0e0;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.counseling-cta-image {
+    flex: 0 0 40%;
+    text-align: right;
+}
+
+.counseling-cta-image img {
+    max-width: 100%;
+    max-height: 250px;
+}
+
+/* ==============================================
+   ARTICLES SECTION
+   ============================================== */
 .articles-section {
     padding: 60px 20px;
     background-color: #f5f5f5;
@@ -1370,59 +1192,25 @@ img {
     border-radius: 4px;
 }
 
-/* Counseling CTA Section */
-.counseling-cta {
-    background-color: #393981;
-    padding: 60px 20px;
-}
-
-.counseling-cta-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-}
-
-.counseling-cta-content {
-    flex: 1;
-}
-
-.counseling-cta-content h2 {
-    color: #fff;
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
-.counseling-cta-content p {
-    color: #e0e0e0;
-    margin-bottom: 30px;
-    line-height: 1.6;
-}
-
-.counseling-cta-image {
-    flex: 0 0 40%;
-    text-align: right;
-}
-
-.counseling-cta-image img {
-    max-width: 100%;
-    max-height: 250px;
-}
-
-/* About Section */
-.upper-aboutus{
+/* ==============================================
+   ABOUT SECTION
+   ============================================== */
+.upper-aboutus {
     margin-top: 35px;
 }
-.about-us-articles{
+
+.about-us-articles {
     color: #393981;
     padding: 25px;
 }
-.about-us-articles h2{
+
+.about-us-articles h2 {
     margin-top: 25px;
     font-size: 2rem;
     font-weight: 900;
 }
-.about-us-articles h4{
+
+.about-us-articles h4 {
     text-align: justify;
     line-height: 1.8;
     margin-top: 10px;
@@ -1435,9 +1223,9 @@ img {
 }
 
 .team-header h2 {
-   text-align: center;
-   color: #393981;
-   font-size: 3rem;
+    text-align: center;
+    color: #393981;
+    font-size: 3rem;
     font-weight: 900;
 }
 
@@ -1445,8 +1233,7 @@ img {
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
-    justify-content:center;
-
+    justify-content: center;
 }
 
 .team-card {
@@ -1455,16 +1242,15 @@ img {
     justify-content: center;
     align-items: center;
     background-color: #393981;
-    border-radius: 10px;    
+    border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease;
     width: 300px;
     height: 400px;
     margin: 10px;
-
-
 }
-.nadeen{
+
+.nadeen {
     margin-top: 20px;
 }
 
@@ -1477,7 +1263,6 @@ img {
     object-fit: cover;
     background-color: white;
     border-radius: 10%;
-
 }
 
 .team-card h3 {
@@ -1485,8 +1270,9 @@ img {
     font-weight: 900;
     color: #ffffff;
     line-height: 1.4;
-    text-align: center;   
+    text-align: center;
 }
+
 .team-card h4 {
     font-size: 1rem;
     font-weight: 100;
@@ -1496,264 +1282,106 @@ img {
     text-align: center;
 }
 
-
-
-/* Responsive Design */
-@media screen and (max-width: 1024px) {
-    .nav-container {
-        padding: 0.8rem 2rem;
-    }
-    
-    .search-container {
-        width: 30%;
-    }
-    
-    .nav-menu {
-        gap: 1.5rem;
-    }
-    
-    .footer {
-        padding: 3rem 2rem;
-    }
-    
-    .footer-container {
-        gap: 2rem;
-    }
-    
-    #header-counseling, 
-    #counseling-services, 
-    #counseling-methods {
-        padding: 2rem 1rem;
-    }
-    
-    #header-counseling h1 {
-        font-size: 2rem;
-    }
-    
-    #booking-section h2 {
-        font-size: 2.5rem;
-        margin-left: 50px;
-    }
-    
-    #booking-section p,
-    .register-button {
-        margin-left: 50px;
-    }
-    
-    #booking-section img {
-        margin-right: 50px;
-    }
-
-    .hero-container,
-    .cta-box,
-    .counseling-cta-box {
-        flex-direction: column;
-    }
-    
-    .hero-content,
-    .hero-image,
-    .cta-content,
-    .cta-image,
-    .counseling-cta-content,
-    .counseling-cta-image {
-        flex: none;
-        width: 100%;
-        text-align: center;
-    }
-    
-    .cta-content {
-        padding: 30px;
-    }
-    
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .articles-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* ==============================================
+   FOOTER
+   ============================================== */
+.footer {
+    background-color: white;
+    padding: 4rem 6rem;
 }
 
-@media screen and (max-width: 850px) {
-    .main-content {
-        margin-top: 110px; /* Adjust for the wrap in navbar */
-    }
-    
-    .nav-container {
-        flex-wrap: wrap;
-        padding: 0.8rem 1rem;
-    }
-    
-    .logo {
-        order: 1;
-        flex: 1;
-    }
-    
-    .search-container {
-        order: 3;
-        width: 100%;
-        margin-top: 0.8rem;
-    }
-    
-    .search-box {
-        width: 100%;
-    }
-    
-    .nav-menu {
-        order: 2;
-        gap: 1rem;
-    }
-    
-    .nav-menu a {
-        font-size: 12px;
-    }
-    
-    .footer-container {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    #header-counseling {
-        flex-direction: column;
-        text-align: center;
-        padding-top: 6rem;
-    }
-    
-    #header-counseling img {
-        max-width: 80%;
-        margin-top: 2rem;
-    }
-    
-    #counseling-services {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    #counseling-methods .method {
-        width: 100%;
-        margin: 1rem 0;
-    }
-    
-    #counseling-methods h2 {
-        font-size: 1.8rem;
-    }
-    
-    #booking-section {
-        flex-direction: column;
-        text-align: center;
-        padding: 2rem 1rem;
-    }
-    
-    #booking-section h2,
-    #booking-section p,
-    .register-button {
-        margin-left: 0;
-    }
-    
-    #booking-section img {
-        max-width: 50%;
-        margin: 2rem 0 0 0;
-    }
-    
-    .tracer-study-container {
-        padding: 30px;
-        margin-top: 140px;
-    }
-    
-    .tracer-study-header {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .tracer-study-header img {
-        margin-right: 0;
-        margin-bottom: 15px;
-    }
-    .upper-aboutus{
-        margin-top: -30px;
-    }
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
 }
 
-@media screen and (max-width: 640px) {
-    .nav-container {
-        position: relative;
-    }
-    
-    .menu-toggle {
-        display: block;
-        order: 2;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-    
-    .nav-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        background-color: #393981;
-        padding: 1rem;
-        z-index: 1001;
-        gap: 1rem;
-        align-items: flex-start;
-    }
-    
-    .nav-menu.active {
-        display: flex;
-    }
-    
-    .footer {
-        padding: 2rem 1rem;
-    }
-    
-    .footer-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .modal-content {
-        width: 90%;
-        padding: 2rem 1.5rem;
-    }
-    
-    .modal-header img {
-        width: 150px;
-    }
-    
-    .modal-header h1 {
-        font-size: 1.8rem;
-    }
-    
-    #header-counseling h1 {
-        font-size: 1.8rem;
-    }
-    
-    #counseling-services {
-        grid-template-columns: 1fr;
-    }
-    
-    #counseling-methods .method {
-        width: 100%;
-        padding: 1.5rem 1rem;
-    }
-    
-    #booking-section h2 {
-        font-size: 2rem;
-    }
-    
-    #booking-section img {
-        max-width: 80%;
-    }
-    
-    .time-slots {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .upper-aboutus{
-        margin-top: -160px;
-    }
-    
-/* Floating Widget Styles - dengan namespace khusus */
+.footer-logo {
+    margin-bottom: 1.5rem;
+}
+
+.footer-logo img {
+    height: 50px;
+}
+
+.footer-address {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #383B98;
+}
+
+.social-links {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.social-links a {
+    background-color: #383B98;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: #2d2f7a;
+}
+
+.contact-info {
+    margin-top: 2rem;
+}
+
+.contact-info li {
+    color: #555;
+    font-size: 14px;
+}
+
+.copyright {
+    text-align: center;
+    padding: 1rem;
+    color: #666;
+    font-size: 13px;
+    margin-top: 3rem;
+}
+
+/* ==============================================
+   FLOATING FEEDBACK WIDGET
+   ============================================== */
 .feedback-floating-widget {
     position: fixed !important;
     bottom: 20px !important;
@@ -1762,7 +1390,6 @@ img {
     font-family: 'Inter', sans-serif;
 }
 
-/* Main Floating Button */
 .feedback-widget-toggle {
     width: 60px !important;
     height: 60px !important;
@@ -1794,19 +1421,6 @@ img {
     transform: rotate(45deg) !important;
 }
 
-@keyframes feedbackPulse {
-    0% {
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-    }
-    50% {
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6), 0 0 0 10px rgba(102, 126, 234, 0.1);
-    }
-    100% {
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-    }
-}
-
-/* Widget Menu */
 .feedback-widget-menu {
     position: absolute !important;
     bottom: 80px !important;
@@ -1892,8 +1506,6 @@ img {
     color: white !important;
 }
 
-
-
 .whatsapp-icon {
     background: linear-gradient(135deg, #25d366, #128c7e) !important;
     color: white !important;
@@ -1917,7 +1529,6 @@ img {
     color: #666 !important;
 }
 
-/* Feedback Modal */
 .feedback-modal {
     position: fixed !important;
     top: 0 !important;
@@ -2063,7 +1674,6 @@ img {
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3) !important;
 }
 
-/* Quick Contact Info */
 .feedback-quick-contact {
     background: #f8f9ff !important;
     padding: 20px !important;
@@ -2091,7 +1701,6 @@ img {
     color: #667eea !important;
 }
 
-/* Success Animation */
 .feedback-success-animation {
     text-align: center !important;
     padding: 40px 25px !important;
@@ -2114,12 +1723,6 @@ img {
     font-size: 36px !important;
 }
 
-@keyframes feedbackSuccessPulse {
-    0% { transform: scale(0); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
 .feedback-success-message h3 {
     color: #333 !important;
     margin: 0 0 10px 0 !important;
@@ -2130,8 +1733,212 @@ img {
     margin: 0 !important;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
+/* ==============================================
+   ADDITIONAL FORM STYLES
+   ============================================== */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #383B98;
+}
+
+.forgot-password {
+    color: #383B98;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signup-prompt {
+    text-align: center;
+    color: #333;
+}
+
+.signup-prompt a {
+    color: #383B98;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+@media screen and (max-width: 1024px) {
+    .nav-container { padding: 0.8rem 2rem; }
+    .search-container { width: 30%; }
+    .nav-menu { gap: 1.5rem; }
+    .footer { padding: 3rem 2rem; }
+    .footer-container { gap: 2rem; }
+    
+    #header-counseling, 
+    #counseling-services, 
+    #counseling-methods { padding: 2rem 1rem; }
+    
+    #header-counseling h1 { font-size: 2rem; }
+    
+    #booking-section h2 {
+        font-size: 2.5rem;
+        margin-left: 50px;
+    }
+    
+    #booking-section p,
+    .register-button { margin-left: 50px; }
+    
+    #booking-section img { margin-right: 50px; }
+
+    .hero-container,
+    .cta-box,
+    .counseling-cta-box { flex-direction: column; }
+    
+    .hero-content,
+    .hero-image,
+    .cta-content,
+    .cta-image,
+    .counseling-cta-content,
+    .counseling-cta-image {
+        flex: none;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .cta-content { padding: 30px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media screen and (max-width: 850px) {
+    .main-content { margin-top: 110px; }
+    
+    .nav-container {
+        flex-wrap: wrap;
+        padding: 0.8rem 1rem;
+    }
+    
+    .logo { order: 1; flex: 1; }
+    .search-container { order: 3; width: 100%; margin-top: 0.8rem; }
+    .search-box { width: 100%; }
+    .nav-menu { order: 2; gap: 1rem; }
+    .nav-menu a { font-size: 12px; }
+    
+    .footer-container { grid-template-columns: 1fr 1fr; }
+    
+    #header-counseling {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 6rem;
+    }
+    
+    #header-counseling img {
+        max-width: 80%;
+        margin-top: 2rem;
+    }
+    
+    #counseling-services { grid-template-columns: repeat(2, 1fr); }
+    
+    #counseling-methods .method {
+        width: 100%;
+        margin: 1rem 0;
+    }
+    
+    #counseling-methods h2 { font-size: 1.8rem; }
+    
+    #booking-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1rem;
+    }
+    
+    #booking-section h2,
+    #booking-section p,
+    .register-button { margin-left: 0; }
+    
+    #booking-section img {
+        max-width: 50%;
+        margin: 2rem 0 0 0;
+    }
+    
+    .tracer-study-container {
+        padding: 30px;
+        margin-top: 140px;
+    }
+    
+    .tracer-study-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .tracer-study-header img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .upper-aboutus { margin-top: -30px; }
+}
+
+@media screen and (max-width: 640px) {
+    .nav-container { position: relative; }
+    
+    .menu-toggle {
+        display: block;
+        order: 2;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background-color: #393981;
+        padding: 1rem;
+        z-index: 1001;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .nav-menu.active { display: flex; }
+    
+    .footer { padding: 2rem 1rem; }
+    .footer-container { grid-template-columns: 1fr; gap: 2rem; }
+    
+    .modal-content {
+        width: 90%;
+        padding: 2rem 1.5rem;
+    }
+    
+    .modal-header img { width: 150px; }
+    .modal-header h1 { font-size: 1.8rem; }
+    
+    #header-counseling h1 { font-size: 1.8rem; }
+    #counseling-services { grid-template-columns: 1fr; }
+    
+    #counseling-methods .method {
+        width: 100%;
+        padding: 1.5rem 1rem;
+    }
+    
+    #booking-section h2 { font-size: 2rem; }
+    #booking-section img { max-width: 80%; }
+    
+    .time-slots { grid-template-columns: repeat(2, 1fr); }
+    .upper-aboutus { margin-top: -160px; }
+    
     .feedback-widget-menu {
         width: 280px !important;
         right: -10px !important;
@@ -2141,5 +1948,4 @@ img {
         margin: 20px !important;
         width: calc(100% - 40px) !important;
     }
-}
 }
