@@ -4,12 +4,14 @@
 class ModalManager {
     static openModal(modal) {
         modal.classList.add('show');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
     }
     
     static closeModal(modal, hideClass = 'hiding', delay = 300) {
         modal.classList.add(hideClass);
         setTimeout(() => {
             modal.classList.remove('show', hideClass);
+            document.body.style.overflow = 'auto'; // Restore scroll
         }, delay);
     }
     
@@ -33,25 +35,96 @@ class ModalManager {
             }
         });
     }
-    
 }
 
 // ===========================================
-// LOGIN MODAL
+// ENHANCED LOGIN MODAL WITH REGISTRATION
 // ===========================================
 const LoginModal = {
     init() {
         this.modal = document.getElementById('loginModal');
-        this.loginLink = document.querySelector('.nav-menu a:last-child');
+        this.loginLink = document.querySelector('.nav-menu > a[href="#"]:last-of-type');
         
-        if (!this.modal || !this.loginLink) return;
-        
-        this.loginLink.onclick = (e) => {
+        if (!this.modal || !this.loginLink) {
+            console.log('Login modal or link not found');
+            return;
+        }
+
+        // Add click event to login link
+        this.loginLink.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling
             ModalManager.openModal(this.modal);
-        };
+            
+            // Default to login form when modal opens
+            if (typeof window.AuthModal !== 'undefined') {
+                window.AuthModal.switchTab('login');
+            }
+        });
         
         ModalManager.setupModalEvents(this.modal);
+        
+        // Add close button functionality if exists
+        const closeBtn = this.modal.querySelector('.close-modal');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                ModalManager.closeModal(this.modal);
+            });
+        }
+        
+        // Initialize AuthModal after modal setup
+        this.initializeAuthModal();
+
+        // Add the Sign In/Sign Up link switching functionality
+        this.setupSwitchLinks();
+    },
+    
+    initializeAuthModal() {
+        // Wait for AuthModal to be available
+        const checkAuthModal = () => {
+            if (typeof window.AuthModal !== 'undefined') {
+                window.AuthModal.init();
+            } else {
+                setTimeout(checkAuthModal, 100);
+            }
+        };
+        checkAuthModal();
+    },
+
+    // Function to handle Sign In/Sign Up link switching
+    setupSwitchLinks() {
+        const signInLink = this.modal.querySelector('[data-target="login"]');
+        const signUpLink = this.modal.querySelector('[data-target="register"]');
+        const loginForm = this.modal.querySelector('#login-form');
+        const registerForm = this.modal.querySelector('#register-form');
+        const signUpPrompt = this.modal.querySelector('#sign-up-prompt');
+        const signInPrompt = this.modal.querySelector('#sign-in-prompt');
+
+        // Initially, show the "Don't have an account? Sign Up" and hide "Already have an account? Sign In"
+        registerForm.style.display = 'none'; // Initially show the login form
+        signInPrompt.style.display = 'none'; // Hide Sign In prompt in login
+        signUpPrompt.style.display = 'block'; // Show Sign Up prompt in login
+
+        // Switch to login form when clicking "Sign In"
+        signInLink.addEventListener('click', () => this.switchTab('login', loginForm, registerForm, signUpPrompt, signInPrompt));
+
+        // Switch to register form when clicking "Sign Up"
+        signUpLink.addEventListener('click', () => this.switchTab('register', loginForm, registerForm, signUpPrompt, signInPrompt));
+    },
+
+    // Function to switch tabs and update the prompt
+    switchTab(tab, loginForm, registerForm, signUpPrompt, signInPrompt) {
+        if (tab === 'login') {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            signUpPrompt.style.display = 'block';
+            signInPrompt.style.display = 'none';
+        } else if (tab === 'register') {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            signUpPrompt.style.display = 'none';
+            signInPrompt.style.display = 'block';
+        }
     }
 };
 
@@ -680,27 +753,64 @@ const FeedbackWidget = {
 };
 
 // ===========================================
+// DROPDOWN NAVIGATION
+// ===========================================
+const DropdownNavigation = {
+    init() {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            const trigger = dropdown.querySelector('.dropdown-trigger');
+            const content = dropdown.querySelector('.dropdown-content');
+            let hoverTimer;
+            
+            // Desktop hover behavior
+            dropdown.addEventListener('mouseenter', () => {
+                clearTimeout(hoverTimer);
+                content.classList.add('active');
+            });
+            
+            dropdown.addEventListener('mouseleave', () => {
+                hoverTimer = setTimeout(() => {
+                    content.classList.remove('active');
+                }, 150);
+            });
+            
+            // Mobile click behavior
+            if (trigger) {
+                trigger.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 640) {
+                        e.preventDefault();
+                        content.classList.toggle('active');
+                        
+                        // Close other dropdowns
+                        dropdowns.forEach(otherDropdown => {
+                            if (otherDropdown !== dropdown) {
+                                otherDropdown.querySelector('.dropdown-content').classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(dropdown => {
+                    dropdown.querySelector('.dropdown-content').classList.remove('active');
+                });
+            }
+        });
+    }
+};
+
+// ===========================================
 // MAIN INITIALIZATION
 // ===========================================
 document.addEventListener('DOMContentLoaded', function() {
-     LoginModal.init(); // JANGAN inisialisasi di sini!
-     MobileMenu.init(); // JANGAN inisialisasi di sini!
      CounselorManager.init();
      BookingManager.init();
-     FeedbackWidget.init();
-     console.log('All modules initialized successfully!');
- });
-
-
-// ===========================================
-// DROPDOWN MENU
-// ===========================================
-const dropdowns = document.querySelectorAll('.nav-menu .dropdown');
-
-dropdowns.forEach(dropdown => {
-    dropdown.addEventListener('click', (e) => {
-        e.preventDefault();
-        const dropdownContent = dropdown.querySelector('.dropdown-content');
-        dropdownContent.classList.toggle('active');
-    });
+     DropdownNavigation.init();
+     console.log('Core modules initialized successfully!');
 });
