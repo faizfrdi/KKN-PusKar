@@ -1,816 +1,2234 @@
-// ===========================================
-// MODAL UTILITIES
-// ===========================================
-class ModalManager {
-    static openModal(modal) {
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden'; // Prevent background scroll
-    }
-    
-    static closeModal(modal, hideClass = 'hiding', delay = 300) {
-        modal.classList.add(hideClass);
-        setTimeout(() => {
-            modal.classList.remove('show', hideClass);
-            document.body.style.overflow = 'auto'; // Restore scroll
-        }, delay);
-    }
-    
-    static setupModalEvents(modal, closeBtn = null) {
-        // Close on outside click
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                this.closeModal(modal);
-            }
-        });
-        
-        // Close on button click
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.closeModal(modal));
-        }
-        
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('show')) {
-                this.closeModal(modal);
-            }
-        });
-    }
+/* ==============================================
+   BASE STYLES & RESET
+   ============================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
-// ===========================================
-// ENHANCED LOGIN MODAL WITH REGISTRATION
-// ===========================================
-const LoginModal = {
-    init() {
-        this.modal = document.getElementById('loginModal');
-        this.loginLink = document.querySelector('.nav-menu > a[href="#"]:last-of-type');
-        
-        if (!this.modal || !this.loginLink) {
-            console.log('Login modal or link not found');
-            return;
-        }
+html { font-size: 16px; }
+body { overflow-x: hidden; background-color: #f5f5f5; color: #333; }
+img { max-width: 100%; height: auto; }
 
-        // Add click event to login link
-        this.loginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation(); // Prevent event bubbling
-            ModalManager.openModal(this.modal);
-            
-            // Default to login form when modal opens
-            if (typeof window.AuthModal !== 'undefined') {
-                window.AuthModal.switchTab('login');
-            }
-        });
-        
-        ModalManager.setupModalEvents(this.modal);
-        
-        // Add close button functionality if exists
-        const closeBtn = this.modal.querySelector('.close-modal');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                ModalManager.closeModal(this.modal);
-            });
-        }
-        
-        // Initialize AuthModal after modal setup
-        this.initializeAuthModal();
+/* ==============================================
+   ANIMATIONS & KEYFRAMES
+   ============================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        // Add the Sign In/Sign Up link switching functionality
-        this.setupSwitchLinks();
-    },
+@keyframes scaleIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+@keyframes checkmarkAnimation {
+    from { transform: rotate(45deg) scale(0); }
+    to { transform: rotate(45deg) scale(1); }
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes modalFadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.8); }
+}
+
+@keyframes feedbackPulse {
+    0% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); }
+    50% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6), 0 0 0 10px rgba(102, 126, 234, 0.1); }
+    100% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); }
+}
+
+@keyframes feedbackSuccessPulse {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* ==============================================
+   NAVIGATION & HEADER
+   ============================================== */
+.nav-container {
+    background-color: #393981;
+    padding: 0.8rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo img { height: 50px; }
+
+.search-container {
+    position: relative;
+    width: 25%;
+}
+
+.search-box {
+    width: 75%;
+    padding: 0.5rem 2.5rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-menu a:hover { color: #e0e0e0; }
+
+.nav-menu .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-toggle { display: none; }
+
+/* ==============================================
+   DROPDOWN NAVIGATION STYLES
+   ============================================== */
+
+.nav-menu .dropdown .dropdown-trigger::after {
+    content: '▼';
+    font-size: 8px;
+    margin-left: 5px;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.nav-menu .dropdown:hover .dropdown-trigger::after {
+    transform: rotate(180deg);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-10px);
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.dropdown-content.active {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-content a {
+    color: #333 !important;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    border-radius: 6px;
+    margin: 4px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f3f4;
+    color: #393981 !important;
+}
+
+.dropdown-content a:first-child {
+    margin-top: 8px;
+}
+
+.dropdown-content a:last-child {
+    margin-bottom: 8px;
+}
+
+/* ==============================================
+   LOGIN/REGISTER MODAL STYLES
+   ============================================== */
+
+/* Tab Navigation Styles */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+    color: #383B98;
+    border-bottom-color: #383B98;
+}
+
+.tab-btn:hover {
+    color: #383B98;
+    background-color: #f8f9ff;
+}
+
+/* Auth Form Styles */
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+/* Register Form specific Styles */
+#register-form {
+    display: none;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"],
+.form-group input[type="tel"] {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-group input::placeholder { color: #aaa; }
+
+.form-note {
+    margin: 5px 0 15px;
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+    background-color: rgba(0, 123, 255, 0.05);
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+}
+
+/* Checkbox Styles */
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-top: 0.2rem;
+}
+
+.checkbox-group label {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Button Styles */
+.login-button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #383B98;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #2d2f7a;
+}
+
+/* Prompt Styles */
+.signup-prompt {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.signup-prompt a {
+    color: #383B98;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signup-prompt a:hover {
+    text-decoration: underline;
+}
+
+/* Modal Close Button */
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #777;
+}
+
+.close-modal:hover { color: #333; }
+
+/* ==============================================
+   MAIN CONTENT AREAS
+   ============================================== */
+.main-content {
+    margin-top: 0;
+    min-height: calc(100vh - 60px - 400px);
+}
+
+.main { padding: 20px; }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+
+/* ==============================================
+   HERO SECTIONS
+   ============================================== */
+.hero-section {
+    background-color: #393981;
+    padding: 100px 20px 60px;
+    margin-top: 60px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    color: white;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: right;
+}
+
+.hero-image img {
+    max-width: 100%;
+    border-radius: 15px;
+}
+
+/* ==============================================
+   FORMS & INPUTS
+   ============================================== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-group input::placeholder { color: #aaa; }
+.form-control:focus { outline: none; border-color: #24388d; }
+
+.form-field {
+    margin-bottom: 20px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="tel"],
+.form-field input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.form-note {
+    margin: 5px 0 15px;
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+    background-color: rgba(0, 123, 255, 0.05);
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-option,
+.radio-options {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.radio-options { gap: 20px; }
+.radio-option input { margin: 0; }
+.radio-option input[type="radio"] { margin-right: 8px; }
+
+.select-field {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+/* ==============================================
+   Faculty Dropdown Styles (with Faculty as the first option)
+   ============================================== */
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+/* Styling for the select dropdown */
+.form-group select:focus {
+    outline: none;
+    border-color: #24388d;
+}
+
+.form-group select option {
+    padding: 8px;
+}
+
+/* Option to hide placeholder or non-relevant text */
+.form-group select option[value=""] {
+    display: none;
+}
+
+/* ==============================================
+   BUTTONS
+   ============================================== */
+.btn {
+    padding: 12px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: white;
+    color: #24388d;
+}
+
+.btn-primary:hover { background-color: #f0f0f0; }
+
+.btn-outline {
+    background-color: white;
+    color: #24388d;
+    border: 1px solid #24388d;
+}
+
+.btn-outline:hover { background-color: #e9eeff; }
+
+.btn-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.login-button,
+.submit-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #383B98;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button {
+    margin-bottom: 2rem;
+}
+
+.submit-btn {
+    padding: 12px 24px;
+    float: right;
+}
+
+.login-button:hover,
+.submit-btn:hover {
+    background-color: #2d2f7a;
+}
+
+.back-btn {
+    background-color: #383B98;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover { background-color: #5a6268; }
+
+.register-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: white;
+    color: #3B347D;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.register-button:hover { background: #f0f0f0; }
+
+.close-button {
+    background-color: #383B98;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.7s forwards;
+}
+
+.close-button:hover { background-color: #c9d0da; }
+
+/* ==============================================
+   MODALS
+   ============================================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 0;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-50px);
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.modal.show .modal-content { 
+    animation: modalFadeIn 0.3s forwards; 
+    transform: scale(1);
+}
+
+.modal.hiding .modal-content { 
+    animation: modalFadeOut 0.3s forwards; 
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.modal-header img {
+    width: 200px;
+    margin-bottom: 2rem;
+}
+
+.modal-header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.modal-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.modal-title {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    color: #24388d;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #777;
+}
+
+.close-modal:hover { color: #333; }
+
+/* ==============================================
+   SUCCESS ANIMATIONS
+   ============================================== */
+.success-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    text-align: center;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    font-family: 'Inter', sans-serif;
+}
+
+.success-icon {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    background-color: #00d1a0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: scaleIn 0.5s ease-out forwards;
+}
+
+.checkmark {
+    width: 28px;
+    height: 50px;
+    border-bottom: 5px solid white;
+    border-right: 5px solid white;
+    margin-bottom: 10px;
+    transform: rotate(45deg) scale(0);
+    animation: checkmarkAnimation 0.5s ease-out 0.4s forwards;
+}
+
+.success-title {
+    font-size: 28px;
+    color: #5a6578;
+    margin: 15px 0 10px;
+    font-weight: 600;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.3s forwards;
+}
+
+.success-message {
+    font-size: 16px;
+    color: #858b96;
+    margin-bottom: 25px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.5s forwards;
+}
+
+/* ==============================================
+   SECTION LAYOUTS
+   ============================================== */
+.section-title {
+    text-align: center;
+    margin: 30px 0;
+    color: #333;
+    position: relative;
+}
+
+.section-title h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    font-size: 16px;
+    color: #666;
+}
+
+.section-subtitle {
+    color: #666;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+/* Partners Section */
+.partners-section {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.partners-logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.partner-logo {
+    flex: 0 0 auto;
+}
+
+.partner-logo img {
+    max-height: 60px;
+}
+
+/* Services Section */
+.services-section {
+    padding: 60px 20px;
+    background-color: #f5f5f5;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.service,
+.service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.service:hover,
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service img {
+    max-width: 50%;
+    border-radius: 20px;
+}
+
+.service h2 {
+    color: #3B347D;
+    margin-bottom: 1rem;
+}
+
+.service p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.service-card {
+    padding: 30px 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.service-icon {
+    margin-bottom: 20px;
+}
+
+.service-icon img {
+    height: 50px;
+}
+
+.service-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* ==============================================
+   COUNSELING SECTIONS
+   ============================================== */
+.counseling {
+    width: 100%;
+    background: linear-gradient(to bottom, #393981, #534d83, #f5f5f5 80%, #ffffff);
+}
+
+#header-counseling {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+#header-counseling .kolom {
+    flex: 1;
+}
+
+#header-counseling h1 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+#header-counseling p {
+    color: #f5f5f5;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+#header-counseling img {
+    max-width: 50%;
+    border-radius: 20px;
+}
+
+#counseling-services {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+#counseling-methods {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+#counseling-methods h2 {
+    color: #333;
+    margin-bottom: 0;
+    margin-top: 50px;
+    font-size: 2rem;
+}
+
+#counseling-methods .method {
+    display: inline-block;
+    width: 45%;
+    margin: 0 2%;
+    padding: 2rem;
+    background: transparent;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+#counseling-methods .method:hover {
+    transform: translateY(-5px);
+}
+
+#counseling-methods h3 {
+    color: #3B347D;
+    margin-bottom: 1rem;
+}
+
+#counseling-methods img {
+    max-width: 70%;
+    border-radius: 20px;
+}
+
+/* Booking Section */
+#booking-section {
+    background: linear-gradient(to right, #393982, #0C0C1C);
+    padding: 2rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+#booking-section .content {
+    flex: 1;
+}
+
+#booking-section h2 {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    margin-left: 100px;
+}
+
+#booking-section p {
+    color: #f5f5f5;
+    margin-bottom: 2rem;
+    margin-left: 100px;
+}
+
+#booking-section img {
+    max-width: 25%;
+    border-radius: 20px;
+    margin-right: 100px;
+}
+
+/* ==============================================
+   COUNSELORS SECTION
+   ============================================== */
+.counselors-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.counselor-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.counselor-card:hover {
+    transform: translateY(-5px);
+}
+
+.counselor-info {
+    padding: 20px;
+}
+
+.counselor-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.counselor-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.counselor-name-title h3 {
+    margin-bottom: 5px;
+    color: #24388d;
+}
+
+.counselor-name-title p {
+    color: #666;
+    font-size: 14px;
+}
+
+.counselor-specialties {
+    margin-bottom: 15px;
+}
+
+.specialty-tag {
+    display: inline-block;
+    background-color: #e9eeff;
+    color: #24388d;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.counselor-location {
+    display: flex;
+    align-items: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.counselor-availability {
+    margin: 15px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.available-badge {
+    display: inline-block;
+    background-color: #e1f7e1;
+    color: #2e7d32;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.future-badge {
+    display: inline-block;
+    background-color: #fff8e1;
+    color: #ff8f00;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+/* ==============================================
+   TIME SLOTS & SCHEDULING
+   ============================================== */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.time-slot {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.time-slot:hover {
+    background-color: #e9eeff;
+    border-color: #24388d;
+}
+
+.time-slot.selected {
+    background-color: #24388d;
+    color: white;
+    border-color: #24388d;
+}
+
+.time-slot.disabled {
+    background-color: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
+    border-color: #eee;
+}
+
+.calendar-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.calendar-icon {
+    width: 70px;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.calendar-month {
+    background-color: #24388d;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 0;
+}
+
+.calendar-day {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    padding: 10px 0;
+}
+
+/* ==============================================
+   BOOKING & INVOICE MODALS
+   ============================================== */
+.invoice-modal .modal-content {
+    max-width: 500px;
+}
+
+.booking-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.meeting-link {
+    background-color: #e9eeff;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border-left: 4px solid #24388d;
+}
+
+.meeting-link p {
+    margin-bottom: 10px;
+}
+
+.meeting-link a {
+    color: #24388d;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.meeting-link a:hover {
+    text-decoration: underline;
+}
+
+/* ==============================================
+   TRACER STUDY FORM
+   ============================================== */
+.tracer-study-container {
+    max-width: 800px;
+    margin: 120px auto 50px;
+    background: white;
+    border-radius: 15px;
+    padding: 55px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tracer-study-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.tracer-study-header img {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.tracer-study-header h1 {
+    font-size: 1.8rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* ==============================================
+   CTA SECTIONS
+   ============================================== */
+.cta-section {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.cta-box {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.cta-image {
+    flex: 0 0 500px;
+}
+
+.cta-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cta-content {
+    flex: 1;
+    padding: 30px 30px 30px 0;
+}
+
+.cta-content h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cta-content p {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.cta-signature {
+    font-style: italic;
+    font-weight: 600;
+    color: #333;
+}
+
+.counseling-cta {
+    background-color: #393981;
+    padding: 60px 20px;
+}
+
+.counseling-cta-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.counseling-cta-content {
+    flex: 1;
+}
+
+.counseling-cta-content h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.counseling-cta-content p {
+    color: #e0e0e0;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.counseling-cta-image {
+    flex: 0 0 40%;
+    text-align: right;
+}
+
+.counseling-cta-image img {
+    max-width: 100%;
+    max-height: 250px;
+}
+
+/* ==============================================
+   ARTICLES SECTION
+   ============================================== */
+.articles-section {
+    padding: 60px 20px;
+    background-color: #f5f5f5;
+}
+
+.articles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.more-link {
+    color: #393981;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.more-link i {
+    font-size: 0.8rem;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.article-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+}
+
+.article-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.article-content {
+    padding: 20px;
+}
+
+.article-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.article-category {
+    background-color: #e9eeff;
+    color: #393981;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* ==============================================
+   ABOUT SECTION
+   ============================================== */
+.upper-aboutus {
+    margin-top: 35px;
+}
+
+.about-us-articles {
+    color: #393981;
+    padding: 25px;
+}
+
+.about-us-articles h2 {
+    margin-top: 25px;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.about-us-articles h4 {
+    text-align: justify;
+    line-height: 1.8;
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-weight: 100;
+}
+
+.team-section {
+    background-color: #f5f5f5;
+}
+
+.team-header h2 {
+    text-align: center;
+    color: #393981;
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.team-flex {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.team-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #393981;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    width: 300px;
+    height: 400px;
+    margin: 10px;
+}
+
+.nadeen {
+    margin-top: 20px;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+}
+
+.team-card img {
+    max-width: 220px;
+    object-fit: cover;
+    background-color: white;
+    border-radius: 10%;
+}
+
+.team-card h3 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.team-card h4 {
+    font-size: 1rem;
+    font-weight: 100;
+    color: #ffffff;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* ==============================================
+   FOOTER
+   ============================================== */
+.footer {
+    background-color: white;
+    padding: 4rem 6rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+}
+
+.footer-logo {
+    margin-bottom: 1.5rem;
+}
+
+.footer-logo img {
+    height: 50px;
+}
+
+.footer-address {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #383B98;
+}
+
+.social-links {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.social-links a {
+    background-color: #383B98;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: #2d2f7a;
+}
+
+.contact-info {
+    margin-top: 2rem;
+}
+
+.contact-info li {
+    color: #555;
+    font-size: 14px;
+}
+
+.copyright {
+    text-align: center;
+    padding: 1rem;
+    color: #666;
+    font-size: 13px;
+    margin-top: 3rem;
+}
+
+/* ==============================================
+   FLOATING FEEDBACK WIDGET
+   ============================================== */
+.feedback-floating-widget {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 99999 !important;
+    font-family: 'Inter', sans-serif;
+}
+
+.feedback-widget-toggle {
+    width: 60px !important;
+    height: 60px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-radius: 50% !important;
+    border: none !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    animation: feedbackPulse 2s infinite;
+    position: relative !important;
+}
+
+.feedback-widget-toggle:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6) !important;
+}
+
+.feedback-widget-toggle i {
+    color: white !important;
+    font-size: 24px !important;
+    transition: transform 0.3s ease !important;
+}
+
+.feedback-widget-toggle.active i {
+    transform: rotate(45deg) !important;
+}
+
+.feedback-widget-menu {
+    position: absolute !important;
+    bottom: 80px !important;
+    right: 0 !important;
+    width: 300px !important;
+    background: white !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(20px) scale(0.8) !important;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+    overflow: hidden !important;
+}
+
+.feedback-widget-menu.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+.feedback-widget-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    padding: 20px !important;
+    text-align: center !important;
+}
+
+.feedback-widget-header h3 {
+    margin: 0 0 5px 0 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: white !important;
+}
+
+.feedback-widget-header p {
+    margin: 0 !important;
+    font-size: 14px !important;
+    opacity: 0.9 !important;
+    color: white !important;
+}
+
+.feedback-widget-options {
+    padding: 0 !important;
+}
+
+.feedback-widget-option {
+    display: flex !important;
+    align-items: center !important;
+    padding: 15px 20px !important;
+    border: none !important;
+    background: none !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    text-align: left !important;
+}
+
+.feedback-widget-option:hover {
+    background: #f8f9ff !important;
+    transform: translateX(5px) !important;
+}
+
+.feedback-widget-option:last-child {
+    border-bottom: none !important;
+}
+
+.feedback-widget-option-icon {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 15px !important;
+    font-size: 18px !important;
+    flex-shrink: 0 !important;
+}
+
+.feedback-icon {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52) !important;
+    color: white !important;
+}
+
+.whatsapp-icon {
+    background: linear-gradient(135deg, #25d366, #128c7e) !important;
+    color: white !important;
+}
+
+.email-icon {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+}
+
+.feedback-widget-option-content h4 {
+    margin: 0 0 3px 0 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+.feedback-widget-option-content p {
+    margin: 0 !important;
+    font-size: 12px !important;
+    color: #666 !important;
+}
+
+.feedback-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 10001 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.feedback-modal.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.feedback-modal-content {
+    background: white !important;
+    border-radius: 15px !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    transform: scale(0.8) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.feedback-modal.active .feedback-modal-content {
+    transform: scale(1) !important;
+}
+
+.feedback-modal-header {
+    padding: 25px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border-radius: 15px 15px 0 0 !important;
+    position: relative !important;
+}
+
+.feedback-modal-header h3 {
+    margin: 0 !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: white !important;
+}
+
+.feedback-close {
+    position: absolute !important;
+    top: 15px !important;
+    right: 20px !important;
+    background: none !important;
+    border: none !important;
+    color: white !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    padding: 5px !important;
+    border-radius: 50% !important;
+    transition: background 0.3s ease !important;
+}
+
+.feedback-close:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.feedback-form-container {
+    padding: 25px !important;
+}
+
+.feedback-form-container .form-group {
+    margin-bottom: 20px !important;
+}
+
+.feedback-form-container .form-group label {
+    display: block !important;
+    margin-bottom: 8px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+}
+
+.feedback-form-container .form-group input,
+.feedback-form-container .form-group textarea,
+.feedback-form-container .form-group select {
+    width: 100% !important;
+    padding: 12px !important;
+    border: 2px solid #e1e5e9 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    transition: border-color 0.3s ease !important;
+    font-family: inherit !important;
+    box-sizing: border-box !important;
+}
+
+.feedback-form-container .form-group input:focus,
+.feedback-form-container .form-group textarea:focus,
+.feedback-form-container .form-group select:focus {
+    outline: none !important;
+    border-color: #667eea !important;
+}
+
+.feedback-form-container .form-group textarea {
+    resize: vertical !important;
+    min-height: 100px !important;
+}
+
+.feedback-rating-group {
+    display: flex !important;
+    gap: 5px !important;
+    align-items: center !important;
+}
+
+.feedback-star {
+    font-size: 24px !important;
+    color: #ddd !important;
+    cursor: pointer !important;
+    transition: color 0.3s ease !important;
+}
+
+.feedback-star.active,
+.feedback-star:hover {
+    color: #ffd700 !important;
+}
+
+.feedback-submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 30px !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+}
+
+.feedback-submit-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3) !important;
+}
+
+.feedback-quick-contact {
+    background: #f8f9ff !important;
+    padding: 20px !important;
+    margin-top: 20px !important;
+    border-radius: 8px !important;
+}
+
+.feedback-quick-contact h4 {
+    margin: 0 0 15px 0 !important;
+    color: #333 !important;
+    font-size: 16px !important;
+}
+
+.feedback-contact-item {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+    font-size: 14px !important;
+    color: #666 !important;
+}
+
+.feedback-contact-item i {
+    margin-right: 10px !important;
+    width: 20px !important;
+    color: #667eea !important;
+}
+
+.feedback-success-animation {
+    text-align: center !important;
+    padding: 40px 25px !important;
+}
+
+.feedback-success-icon {
+    width: 80px !important;
+    height: 80px !important;
+    background: linear-gradient(135deg, #4ecdc4, #44a08d) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto 20px !important;
+    animation: feedbackSuccessPulse 0.6s ease-out;
+}
+
+.feedback-success-icon i {
+    color: white !important;
+    font-size: 36px !important;
+}
+
+.feedback-success-message h3 {
+    color: #333 !important;
+    margin: 0 0 10px 0 !important;
+}
+
+.feedback-success-message p {
+    color: #666 !important;
+    margin: 0 !important;
+}
+
+/* ==============================================
+   ADDITIONAL FORM STYLES
+   ============================================== */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #383B98;
+}
+
+.forgot-password {
+    color: #383B98;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signup-prompt {
+    text-align: center;
+    color: #333;
+}
+
+.signup-prompt a {
+    color: #383B98;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+@media screen and (max-width: 1024px) {
+    .nav-container { padding: 0.8rem 2rem; }
+    .search-container { width: 30%; }
+    .nav-menu { gap: 1.5rem; }
+    .footer { padding: 3rem 2rem; }
+    .footer-container { gap: 2rem; }
     
-    initializeAuthModal() {
-        // Wait for AuthModal to be available
-        const checkAuthModal = () => {
-            if (typeof window.AuthModal !== 'undefined') {
-                window.AuthModal.init();
-            } else {
-                setTimeout(checkAuthModal, 100);
-            }
-        };
-        checkAuthModal();
-    },
-
-    // Function to handle Sign In/Sign Up link switching
-    setupSwitchLinks() {
-        const signInLink = this.modal.querySelector('[data-target="login"]');
-        const signUpLink = this.modal.querySelector('[data-target="register"]');
-        const loginForm = this.modal.querySelector('#login-form');
-        const registerForm = this.modal.querySelector('#register-form');
-        const signUpPrompt = this.modal.querySelector('#sign-up-prompt');
-        const signInPrompt = this.modal.querySelector('#sign-in-prompt');
-
-        // Initially, show the "Don't have an account? Sign Up" and hide "Already have an account? Sign In"
-        registerForm.style.display = 'none'; // Initially show the login form
-        signInPrompt.style.display = 'none'; // Hide Sign In prompt in login
-        signUpPrompt.style.display = 'block'; // Show Sign Up prompt in login
-
-        // Switch to login form when clicking "Sign In"
-        signInLink.addEventListener('click', () => this.switchTab('login', loginForm, registerForm, signUpPrompt, signInPrompt));
-
-        // Switch to register form when clicking "Sign Up"
-        signUpLink.addEventListener('click', () => this.switchTab('register', loginForm, registerForm, signUpPrompt, signInPrompt));
-    },
-
-    // Function to switch tabs and update the prompt
-    switchTab(tab, loginForm, registerForm, signUpPrompt, signInPrompt) {
-        if (tab === 'login') {
-            loginForm.style.display = 'block';
-            registerForm.style.display = 'none';
-            signUpPrompt.style.display = 'block';
-            signInPrompt.style.display = 'none';
-        } else if (tab === 'register') {
-            loginForm.style.display = 'none';
-            registerForm.style.display = 'block';
-            signUpPrompt.style.display = 'none';
-            signInPrompt.style.display = 'block';
-        }
+    #header-counseling, 
+    #counseling-services, 
+    #counseling-methods { padding: 2rem 1rem; }
+    
+    #header-counseling h1 { font-size: 2rem; }
+    
+    #booking-section h2 {
+        font-size: 2.5rem;
+        margin-left: 50px;
     }
-};
+    
+    #booking-section p,
+    .register-button { margin-left: 50px; }
+    
+    #booking-section img { margin-right: 50px; }
 
-// ===========================================
-// MOBILE MENU
-// ===========================================
-const MobileMenu = {
-    init() {
-        this.navContainer = document.querySelector('.nav-container');
-        this.navMenu = document.querySelector('.nav-menu');
-        
-        if (!this.navContainer || !this.navMenu) return;
-        
-        this.createMenuToggle();
-        this.setupEventListeners();
-    },
+    .hero-container,
+    .cta-box,
+    .counseling-cta-box { flex-direction: column; }
     
-    createMenuToggle() {
-        this.menuToggle = document.createElement('div');
-        this.menuToggle.className = 'menu-toggle';
-        this.menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        this.navContainer.insertBefore(this.menuToggle, document.querySelector('.search-container'));
-    },
-    
-    toggleMenu() {
-        this.navMenu.classList.toggle('active');
-        const icon = this.menuToggle.querySelector('i');
-        icon.className = this.navMenu.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
-    },
-    
-    closeMenu() {
-        this.navMenu.classList.remove('active');
-        this.menuToggle.querySelector('i').className = 'fas fa-bars';
-    },
-    
-    setupEventListeners() {
-        this.menuToggle.addEventListener('click', () => this.toggleMenu());
-        
-        document.addEventListener('click', (e) => {
-            if (!this.navMenu.contains(e.target) && !this.menuToggle.contains(e.target) && this.navMenu.classList.contains('active')) {
-                this.closeMenu();
-            }
-        });
-        
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 640 && this.navMenu.classList.contains('active')) {
-                this.closeMenu();
-            }
-        });
+    .hero-content,
+    .hero-image,
+    .cta-content,
+    .cta-image,
+    .counseling-cta-content,
+    .counseling-cta-image {
+        flex: none;
+        width: 100%;
+        text-align: center;
     }
-};
+    
+    .cta-content { padding: 30px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
-// ===========================================
-// COUNSELOR DATA & MANAGEMENT
-// ===========================================
-const counselors = [
-    {
-        id: 1, name: "nama", title: "Career Development Specialist",
-        avatar: "/api/placeholder/80/80",
-        specialties: ["Career Transition", "Job Interview Preparation", "Leadership Development"],
-        location: "Pusat Karier UIN Jakarta", availability: "Tersedia hari ini",
-        availableOnline: true, availableOffline: true
-    },
-    {
-        id: 2, name: "nama", title: "HR & Recruitment Expert",
-        avatar: "/api/placeholder/80/80",
-        specialties: ["Resume Building", "Hiring Process", "Salary Negotiation"],
-        location: "Pusat Karier UIN Jakarta", availability: "Jumat, 07 Maret 2025",
-        availableOnline: true, availableOffline: true
-    },
-    {
-        id: 3, name: "nama", title: "Business & Entrepreneurship Advisor",
-        avatar: "/api/placeholder/80/80",
-        specialties: ["Startup Guidance", "Business Planning", "Market Analysis"],
-        location: "Pusat Karier UIN Jakarta", availability: "Tersedia hari ini",
-        availableOnline: true, availableOffline: false
-    },
-    {
-        id: 4, name: "nama", title: "Academic & Research Career Counselor",
-        avatar: "/api/placeholder/80/80",
-        specialties: ["Research Careers", "Academic Job Market", "Publication Strategy"],
-        location: "Pusat Karier UIN Jakarta", availability: "Jumat, 07 Maret 2025",
-        availableOnline: true, availableOffline: true
-    },
-    {
-        id: 5, name: "nama", title: "Education & Training Specialist",
-        avatar: "/api/placeholder/80/80",
-        specialties: ["Educational Planning", "Skill Development", "Training Programs"],
-        location: "Pusat Karier UIN Jakarta", availability: "Tersedia hari ini",
-        availableOnline: false, availableOffline: true
-    },
-    {
-        id: 6, name: "nama", title: "Human Resources Consultant",
-        avatar: "/api/placeholder/80/80",
-        specialties: ["Career Mapping", "Professional Development", "Workplace Dynamics"],
-        location: "Pusat Karier UIN Jakarta", availability: "Jumat, 07 Maret 2025",
-        availableOnline: true, availableOffline: true
+@media screen and (max-width: 850px) {
+    .main-content { margin-top: 110px; }
+    
+    .nav-container {
+        flex-wrap: wrap;
+        padding: 0.8rem 1rem;
     }
-];
-
-const CounselorManager = {
-    init() {
-        this.container = document.getElementById('counselors-container');
-        if (this.container) this.render();
-    },
     
-    render() {
-        this.container.innerHTML = '';
-        counselors.forEach(counselor => {
-            const card = this.createCounselorCard(counselor);
-            this.container.appendChild(card);
-        });
-        this.attachEventListeners();
-    },
+    .logo { order: 1; flex: 1; }
+    .search-container { order: 3; width: 100%; margin-top: 0.8rem; }
+    .search-box { width: 100%; }
+    .nav-menu { order: 2; gap: 1rem; }
+    .nav-menu a { font-size: 12px; }
     
-    createCounselorCard(counselor) {
-        const card = document.createElement('div');
-        card.className = 'counselor-card';
-        
-        const availabilityClass = counselor.availability.includes('hari ini') ? 'available-badge' : 'future-badge';
-        const buttonsHtml = this.createButtonsHtml(counselor);
-        
-        card.innerHTML = `
-            <div class="counselor-info">
-                <div class="counselor-header">
-                    <img src="${counselor.avatar}" alt="${counselor.name}" class="counselor-avatar">
-                    <div class="counselor-name-title">
-                        <h3>${counselor.name}</h3>
-                        <p>${counselor.title}</p>
-                    </div>
-                </div>
-                <div class="counselor-specialties">
-                    ${counselor.specialties.map(specialty => `<span class="specialty-tag">${specialty}</span>`).join('')}
-                </div>
-                <div class="counselor-location">${counselor.location}</div>
-                <div class="counselor-availability">
-                    Tersedia: <span class="${availabilityClass}">${counselor.availability}</span>
-                </div>
-                ${buttonsHtml}
-            </div>
-        `;
-        
-        return card;
-    },
+    .footer-container { grid-template-columns: 1fr 1fr; }
     
-    createButtonsHtml(counselor) {
-        const buttons = [];
-        if (counselor.availableOnline) {
-            buttons.push(`<button class="btn btn-outline book-btn" data-counselor="${counselor.id}" data-type="online">Konsultasi Online</button>`);
-        }
-        if (counselor.availableOffline) {
-            buttons.push(`<button class="btn btn-primary book-btn" data-counselor="${counselor.id}" data-type="offline">Pesan Janji Temu</button>`);
-        }
-        return `<div class="btn-container">${buttons.join('')}</div>`;
-    },
-    
-    attachEventListeners() {
-        document.querySelectorAll('.book-btn').forEach(btn => {
-            btn.addEventListener('click', BookingManager.handleBookingClick);
-        });
+    #header-counseling {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 6rem;
     }
-};
-
-// ===========================================
-// BOOKING SYSTEM
-// ===========================================
-const BookingManager = {
-    init() {
-        this.bookingModal = document.getElementById('booking-modal');
-        this.invoiceModal = document.getElementById('invoice-modal');
-        this.bookingForm = document.getElementById('booking-form');
-        this.selectedTimeInput = document.getElementById('selected-time');
-        this.meetingLinkContainer = document.getElementById('meeting-link-container');
-        
-        this.setupEventListeners();
-        this.setupDateConstraints();
-    },
     
-    handleBookingClick(e) {
-        const counselorId = parseInt(e.target.dataset.counselor);
-        const sessionType = e.target.dataset.type;
-        
-        document.getElementById('counselor-id').value = counselorId;
-        document.getElementById('session-type').value = sessionType;
-        document.getElementById(`session-${sessionType}`).checked = true;
-        
-        ModalManager.openModal(BookingManager.bookingModal);
-    },
-    
-    setupEventListeners() {
-        // Time slot selection
-        document.querySelectorAll('.time-slot').forEach(slot => {
-            if (!slot.classList.contains('disabled')) {
-                slot.addEventListener('click', () => this.selectTimeSlot(slot));
-            }
-        });
-        
-        // Form submission
-        if (this.bookingForm) {
-            this.bookingForm.addEventListener('submit', (e) => this.handleFormSubmission(e));
-        }
-        
-        // Modal close events
-        ['close-booking', 'close-invoice', 'close-confirmation'].forEach(id => {
-            const btn = document.getElementById(id);
-            if (btn) {
-                btn.addEventListener('click', () => {
-                    const modal = id.includes('booking') ? this.bookingModal : this.invoiceModal;
-                    ModalManager.closeModal(modal);
-                });
-            }
-        });
-        
-        // Setup modal events
-        if (this.bookingModal) ModalManager.setupModalEvents(this.bookingModal);
-        if (this.invoiceModal) ModalManager.setupModalEvents(this.invoiceModal);
-    },
-    
-    selectTimeSlot(slot) {
-        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-        slot.classList.add('selected');
-        this.selectedTimeInput.value = slot.dataset.time;
-    },
-    
-    setupDateConstraints() {
-        const today = new Date().toISOString().split('T')[0];
-        const sessionDateInput = document.getElementById('session-date');
-        if (sessionDateInput) sessionDateInput.min = today;
-    },
-    
-    handleFormSubmission(e) {
-        e.preventDefault();
-        
-        const counselorId = document.getElementById('counselor-id').value;
-        const counselor = counselors.find(c => c.id === parseInt(counselorId));
-        const formData = this.getFormData();
-        
-        this.populateInvoice(counselor, formData);
-        this.showEmailNotification();
-        
-        ModalManager.closeModal(this.bookingModal);
-        setTimeout(() => ModalManager.openModal(this.invoiceModal), 300);
-    },
-    
-    getFormData() {
-        return {
-            name: document.getElementById('name').value,
-            sessionType: document.querySelector('input[name="session-type"]:checked').value,
-            date: document.getElementById('session-date').value,
-            time: this.selectedTimeInput.value,
-            bookingId: `CA-${Math.floor(Math.random() * 10000000).toString().padStart(8, '0')}`
-        };
-    },
-    
-    populateInvoice(counselor, formData) {
-        const formattedDate = new Date(formData.date).toLocaleDateString('en-US', {
-            year: 'numeric', month: 'long', day: 'numeric'
-        });
-        const formattedTime = new Date(`2025-03-06T${formData.time}`).toLocaleTimeString('en-US', {
-            hour: 'numeric', minute: 'numeric', hour12: true
-        });
-        
-        // Set invoice values
-        const elements = {
-            'invoice-counselor': counselor.name,
-            'invoice-date': formattedDate,
-            'invoice-time': formattedTime,
-            'invoice-type': formData.sessionType === 'online' ? 'Online' : 'In-person',
-            'invoice-id': formData.bookingId,
-            'invoice-client-name': formData.name,
-            'email-client-name': formData.name
-        };
-        
-        Object.entries(elements).forEach(([id, value]) => {
-            const element = document.getElementById(id);
-            if (element) element.textContent = value;
-        });
-        
-        this.setupCalendarIcon(formData.date);
-        this.setupMeetingLink(formData.sessionType);
-        this.generateQRCode(formData.bookingId);
-    },
-    
-    setupCalendarIcon(date) {
-        const dateObj = new Date(date);
-        const month = dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-        const day = dateObj.getDate();
-        
-        const monthEl = document.getElementById('invoice-month');
-        const dayEl = document.getElementById('invoice-day');
-        if (monthEl) monthEl.textContent = month;
-        if (dayEl) dayEl.textContent = day;
-    },
-    
-    setupMeetingLink(sessionType) {
-        if (sessionType === 'online') {
-            this.meetingLinkContainer.style.display = 'block';
-            const meetId = Math.random().toString(36).substring(2, 10);
-            const meetLink = `https://meet.google.com/${meetId}`;
-            const linkEl = document.getElementById('gmeet-link');
-            if (linkEl) {
-                linkEl.href = meetLink;
-                linkEl.textContent = meetLink;
-            }
-        } else {
-            this.meetingLinkContainer.style.display = 'none';
-        }
-    },
-    
-    generateQRCode(bookingId) {
-        const qrCode = document.getElementById('receipt-qr');
-        if (qrCode) {
-            qrCode.innerHTML = `<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="120" height="120" fill="#FFFFFF"/>
-                <rect x="20" y="20" width="80" height="80" fill="#F5F5F5"/>
-                <rect x="30" y="30" width="10" height="10" fill="#000000"/>
-                <rect x="50" y="30" width="10" height="10" fill="#000000"/>
-                <rect x="70" y="30" width="10" height="10" fill="#000000"/>
-                <rect x="30" y="50" width="10" height="10" fill="#000000"/>
-                <rect x="50" y="50" width="10" height="10" fill="#000000"/>
-                <rect x="70" y="50" width="10" height="10" fill="#000000"/>
-                <rect x="30" y="70" width="10" height="10" fill="#000000"/>
-                <rect x="50" y="70" width="10" height="10" fill="#000000"/>
-                <rect x="70" y="70" width="10" height="10" fill="#000000"/>
-                <text x="60" y="110" text-anchor="middle" font-size="8" fill="#666666">${bookingId}</text>
-            </svg>`;
-        }
-    },
-    
-    showEmailNotification() {
-        setTimeout(() => {
-            const notification = document.createElement('div');
-            notification.className = 'gmail-notification';
-            notification.style.cssText = `
-                position: fixed; bottom: 20px; right: 20px; background-color: #fff;
-                border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                padding: 15px; display: flex; align-items: center; max-width: 350px;
-                z-index: 1000; animation: slideIn 0.3s ease, fadeOut 0.5s ease 5s forwards;
-                transform: translateX(400px);
-            `;
-            
-            notification.innerHTML = `
-                <div style="width: 40px; height: 40px; margin-right: 15px; background-color: #D44638; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF">
-                        <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4.7l-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/>
-                    </svg>
-                </div>
-                <div>
-                    <div style="font-weight: 600; margin-bottom: 5px;">New Email</div>
-                    <div style="font-size: 14px; color: #555;">Your Career Advice Session has been confirmed</div>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            this.addNotificationStyles();
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 6000);
-        }, 1500);
-    },
-    
-    addNotificationStyles() {
-        if (!document.getElementById('notification-styles')) {
-            const style = document.createElement('style');
-            style.id = 'notification-styles';
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(400px); }
-                    to { transform: translateX(0); }
-                }
-                @keyframes fadeOut {
-                    from { opacity: 1; }
-                    to { opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-        }
+    #header-counseling img {
+        max-width: 80%;
+        margin-top: 2rem;
     }
-};
-
-// ===========================================
-// FEEDBACK WIDGET
-// ===========================================
-const FeedbackWidget = {
-    init() {
-        this.widgetToggle = document.getElementById('feedbackWidgetToggle');
-        this.widgetMenu = document.getElementById('feedbackWidgetMenu');
-        this.feedbackModal = document.getElementById('feedbackModal');
-        this.feedbackForm = document.getElementById('feedbackForm');
-        this.ratingInput = document.getElementById('feedbackRatingInput');
-        
-        if (!this.widgetToggle || !this.widgetMenu || !this.feedbackModal) {
-            console.error('Feedback widget elements not found!');
-            return;
-        }
-        
-        this.setupEventListeners();
-        this.setupStarRating();
-    },
     
-    setupEventListeners() {
-        // Toggle widget menu
-        this.widgetToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.toggleWidget();
-        });
-        
-        // Close widget on outside click
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.feedback-floating-widget')) {
-                this.closeWidget();
-            }
-        });
-        
-        // Widget options
-        document.querySelectorAll('.feedback-widget-option').forEach(option => {
-            option.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                this.handleWidgetAction(option.getAttribute('data-action'));
-            });
-        });
-        
-        // Modal events
-        const closeBtn = document.getElementById('feedbackCloseBtn');
-        if (closeBtn) closeBtn.addEventListener('click', () => this.closeFeedbackModal());
-        
-        this.feedbackModal.addEventListener('click', (e) => {
-            if (e.target === this.feedbackModal) this.closeFeedbackModal();
-        });
-        
-        // Form submission
-        if (this.feedbackForm) {
-            this.feedbackForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
-        }
-        
-        // Keyboard events
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (this.feedbackModal.classList.contains('active')) {
-                    this.closeFeedbackModal();
-                } else if (this.widgetMenu.classList.contains('active')) {
-                    this.closeWidget();
-                }
-            }
-        });
-    },
+    #counseling-services { grid-template-columns: repeat(2, 1fr); }
     
-    toggleWidget() {
-        this.widgetMenu.classList.toggle('active');
-        this.widgetToggle.classList.toggle('active');
-    },
-    
-    closeWidget() {
-        this.widgetMenu.classList.remove('active');
-        this.widgetToggle.classList.remove('active');
-    },
-    
-    handleWidgetAction(action) {
-        const actions = {
-            feedback: () => this.openFeedbackModal(),
-            whatsapp: () => this.openWhatsApp(),
-            email: () => this.openEmail()
-        };
-        
-        if (actions[action]) actions[action]();
-    },
-    
-    openFeedbackModal() {
-        this.feedbackModal.classList.add('active');
-        this.closeWidget();
-        document.body.style.overflow = 'hidden';
-    },
-    
-    closeFeedbackModal() {
-        this.feedbackModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-        this.resetFeedbackForm();
-    },
-    
-    resetFeedbackForm() {
-        document.getElementById('feedbackFormContainer').style.display = 'block';
-        document.getElementById('feedbackSuccessMessage').style.display = 'none';
-        if (this.feedbackForm) this.feedbackForm.reset();
-        this.clearStarRating();
-    },
-    
-    setupStarRating() {
-        const stars = document.querySelectorAll('.feedback-star');
-        if (stars.length === 0 || !this.ratingInput) return;
-        
-        stars.forEach(star => {
-            star.addEventListener('click', () => {
-                const rating = star.getAttribute('data-rating');
-                this.ratingInput.value = rating;
-                this.updateStarDisplay(rating);
-            });
-            
-            star.addEventListener('mouseover', () => {
-                this.updateStarDisplay(star.getAttribute('data-rating'));
-            });
-        });
-        
-        const ratingGroup = document.querySelector('.feedback-rating-group');
-        if (ratingGroup) {
-            ratingGroup.addEventListener('mouseleave', () => {
-                this.updateStarDisplay(this.ratingInput.value);
-            });
-        }
-    },
-    
-    updateStarDisplay(rating) {
-        document.querySelectorAll('.feedback-star').forEach((star, index) => {
-            star.classList.toggle('active', index < rating);
-        });
-    },
-    
-    clearStarRating() {
-        document.querySelectorAll('.feedback-star').forEach(star => {
-            star.classList.remove('active');
-        });
-        if (this.ratingInput) this.ratingInput.value = '';
-    },
-    
-    handleFormSubmit(e) {
-        e.preventDefault();
-        
-        const submitBtn = this.feedbackForm.querySelector('.feedback-submit-btn');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Submitting...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            document.getElementById('feedbackFormContainer').style.display = 'none';
-            document.getElementById('feedbackSuccessMessage').style.display = 'block';
-            
-            setTimeout(() => {
-                this.closeFeedbackModal();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 3000);
-        }, 1500);
-    },
-    
-    openWhatsApp() {
-        const phoneNumber = '6281324306918';
-        const message = 'Hello, I need assistance regarding Pusat Karier UIN Jakarta services.';
-        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappURL, '_blank');
-        this.closeWidget();
-    },
-    
-    openEmail() {
-        const email = 'karir@uinjkt.ac.id';
-        const subject = 'Support Request - Pusat Karier UIN Jakarta';
-        const body = 'Hello,\n\nI need assistance with...\n\nThank you.';
-        
-        // Show email options to user
-        this.showEmailOptions(email, subject, body);
-        this.closeWidget();
-    },
-    
-    showEmailOptions(email, subject, body) {
-        // Create modal for email options
-        const emailModal = document.createElement('div');
-        emailModal.className = 'email-modal';
-        emailModal.style.cssText = `
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); display: flex; align-items: center;
-            justify-content: center; z-index: 10000;
-        `;
-        
-        emailModal.innerHTML = `
-            <div style="background: white; padding: 30px; border-radius: 10px; max-width: 400px; text-align: center;">
-                <h3 style="margin-bottom: 20px;">Choose Email Option</h3>
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <button class="email-option-btn" data-type="gmail" style="padding: 12px 20px; border: none; background: #d44638; color: white; border-radius: 5px; cursor: pointer;">
-                        📧 Open Gmail
-                    </button>
-                    <button class="email-option-btn" data-type="outlook" style="padding: 12px 20px; border: none; background: #0078d4; color: white; border-radius: 5px; cursor: pointer;">
-                        📨 Open Outlook
-                    </button>
-                    <button class="email-option-btn" data-type="mailto" style="padding: 12px 20px; border: none; background: #28a745; color: white; border-radius: 5px; cursor: pointer;">
-                        📮 Open Default Email App
-                    </button>
-                    <button id="email-modal-close" style="padding: 8px 16px; border: 1px solid #ccc; background: white; border-radius: 5px; cursor: pointer;">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(emailModal);
-        
-        // Handle email option clicks
-        emailModal.querySelectorAll('.email-option-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const type = btn.dataset.type;
-                const urls = {
-                    gmail: `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
-                    outlook: `https://outlook.live.com/mail/0/deeplink/compose?to=${email}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
-                    mailto: `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-                };
-                
-                if (type === 'mailto') {
-                    window.location.href = urls[type];
-                } else {
-                    window.open(urls[type], '_blank');
-                }
-                
-                emailModal.remove();
-            });
-        });
-        
-        // Close modal
-        document.getElementById('email-modal-close').addEventListener('click', () => {
-            emailModal.remove();
-        });
-        
-        emailModal.addEventListener('click', (e) => {
-            if (e.target === emailModal) emailModal.remove();
-        });
+    #counseling-methods .method {
+        width: 100%;
+        margin: 1rem 0;
     }
-};
-
-// ===========================================
-// DROPDOWN NAVIGATION
-// ===========================================
-const DropdownNavigation = {
-    init() {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        
-        dropdowns.forEach(dropdown => {
-            const trigger = dropdown.querySelector('.dropdown-trigger');
-            const content = dropdown.querySelector('.dropdown-content');
-            let hoverTimer;
-            
-            // Desktop hover behavior
-            dropdown.addEventListener('mouseenter', () => {
-                clearTimeout(hoverTimer);
-                content.classList.add('active');
-            });
-            
-            dropdown.addEventListener('mouseleave', () => {
-                hoverTimer = setTimeout(() => {
-                    content.classList.remove('active');
-                }, 150);
-            });
-            
-            // Mobile click behavior
-            if (trigger) {
-                trigger.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 640) {
-                        e.preventDefault();
-                        content.classList.toggle('active');
-                        
-                        // Close other dropdowns
-                        dropdowns.forEach(otherDropdown => {
-                            if (otherDropdown !== dropdown) {
-                                otherDropdown.querySelector('.dropdown-content').classList.remove('active');
-                            }
-                        });
-                    }
-                });
-            }
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.dropdown')) {
-                dropdowns.forEach(dropdown => {
-                    dropdown.querySelector('.dropdown-content').classList.remove('active');
-                });
-            }
-        });
+    
+    #counseling-methods h2 { font-size: 1.8rem; }
+    
+    #booking-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1rem;
     }
-};
+    
+    #booking-section h2,
+    #booking-section p,
+    .register-button { margin-left: 0; }
+    
+    #booking-section img {
+        max-width: 50%;
+        margin: 2rem 0 0 0;
+    }
+    
+    .tracer-study-container {
+        padding: 30px;
+        margin-top: 140px;
+    }
+    
+    .tracer-study-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .tracer-study-header img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .upper-aboutus { margin-top: -30px; }
+}
 
-// ===========================================
-// MAIN INITIALIZATION
-// ===========================================
-document.addEventListener('DOMContentLoaded', function() {
-     CounselorManager.init();
-     BookingManager.init();
-     DropdownNavigation.init();
-     console.log('Core modules initialized successfully!');
-});
+@media screen and (max-width: 640px) {
+    .nav-container { position: relative; }
+    
+    .menu-toggle {
+        display: block;
+        order: 2;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background-color: #393981;
+        padding: 1rem;
+        z-index: 1001;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .nav-menu.active { display: flex; }
+    
+    .footer { padding: 2rem 1rem; }
+    .footer-container { grid-template-columns: 1fr; gap: 2rem; }
+    
+    .modal-content {
+        width: 90%;
+        padding: 2rem 1.5rem;
+    }
+    
+    .modal-header img { width: 150px; }
+    .modal-header h1 { font-size: 1.8rem; }
+    
+    #header-counseling h1 { font-size: 1.8rem; }
+    #counseling-services { grid-template-columns: 1fr; }
+    
+    #counseling-methods .method {
+        width: 100%;
+        padding: 1.5rem 1rem;
+    }
+    
+    #booking-section h2 { font-size: 2rem; }
+    #booking-section img { max-width: 80%; }
+    
+    .time-slots { grid-template-columns: repeat(2, 1fr); }
+    .upper-aboutus { margin-top: -160px; }
+    
+    .feedback-widget-menu {
+        width: 280px !important;
+        right: -10px !important;
+    }
+
+    .feedback-modal-content {
+        margin: 20px !important;
+        width: calc(100% - 40px) !important;
+    }
+
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        background-color: rgba(255, 255, 255, 0.1);
+        margin: 5px 0;
+        border-radius: 6px;
+        transform: none;
+        margin-top: 0;
+    }
+    
+    .dropdown-content::before {
+        display: none;
+    }
+    
+    .dropdown-content a {
+        color: #e0e0e0 !important;
+        padding: 8px 16px;
+        margin: 2px;
+    }
+    
+    .dropdown-content a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white !important;
+    }
+}
