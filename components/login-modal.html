@@ -3,17 +3,19 @@
     <div class="modal-content">
         <div class="modal-header">
             <img src="assets/image/Logo/logo_footbar.png" alt="Pusat Karier Logo">
-            <h1>Welcome back!</h1>
-            <p>Enter your Credentials to access your account</p>
+            <h1 id="modal-title">Welcome back!</h1>
+            <p id="modal-subtitle">Enter your Credentials to access your account</p>
         </div>
-        <form>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active">
             <div class="form-group">
                 <label>Email address</label>
-                <input type="email" placeholder="Enter your email">
+                <input type="email" name="email" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" placeholder="Password">
+                <input type="password" name="password" placeholder="Password" required>
             </div>
             <div class="remember-forgot">
                 <div class="remember-me">
@@ -23,9 +25,64 @@
                 <a href="#" class="forgot-password">Forgot password</a>
             </div>
             <button type="submit" class="login-button">Login</button>
-            <p class="signup-prompt">
-                Don't have an account? <a href="#">Sign Up</a>
-            </p>
         </form>
+        
+        <!-- Registration Form -->
+        <form id="register-form" class="auth-form">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="fullname" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label>Email address</label>
+                <input type="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" name="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label>Student ID / Alumni ID</label>
+                <input type="text" name="student_id" placeholder="Enter your ID" required>
+            </div>
+             <div class="form-group">
+                <label for="faculty-select">Faculty</label> <!-- This will be displayed before the select dropdown -->
+                <select name="faculty" id="faculty-select" required>
+                    <option value="" disabled selected hidden>Select Faculty</option> <!-- No faculty selected initially -->
+                    <option value="fdk">Fakultas Dirasat Islamiyah</option>
+                    <option value="fah">Fakultas Adab dan Humaniora</option>
+                    <option value="fdk">Fakultas Dakwah dan Komunikasi</option>
+                    <option value="fuad">Fakultas Ushuluddin, Adab dan Dakwah</option>
+                    <option value="fsh">Fakultas Syariah dan Hukum</option>
+                    <option value="fitk">Fakultas Ilmu Tarbiyah dan Keguruan</option>
+                    <option value="fpsb">Fakultas Psikologi</option>
+                    <option value="fst">Fakultas Sains dan Teknologi</option>
+                    <option value="fkik">Fakultas Kedokteran dan Ilmu Kesehatan</option>
+                    <option value="feb">Fakultas Ekonomi dan Bisnis</option>
+                    <option value="fisip">Fakultas Ilmu Sosial dan Ilmu Politik</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Create password" required minlength="6">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" placeholder="Confirm password" required minlength="6">
+            </div>
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the <a href="#" class="link">Terms and Conditions</a></label>
+                </div>
+            </div>
+            <button type="submit" class="login-button">Create Account</button>
+        </form>
+
+        <!-- Sign In / Sign Up Links (Moved below form) -->
+        <div class="signup-prompt">
+            <p id="sign-up-prompt">Don't have an account? <a href="#" class="switch-tab" data-target="register">Sign Up</a></p>
+            <p id="sign-in-prompt" style="display: none;">Already have an account? <a href="#" class="switch-tab" data-target="login">Sign In</a></p>
+        </div>
     </div>
 </div>
