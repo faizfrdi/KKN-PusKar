@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Job Vacancies - Pusat Karier UIN Syarif Hidayatullah</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/style/styles.css">
+    <link rel="stylesheet" href="assets/style/vacancies.css">
+    <link rel="shortcut icon" href="assets/image/Logo/icon.png" type="image/x-icon">
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <!-- Vacancies Section -->
+    <section class="vacancies-page">
+        <div class="container">
+            <!-- Search and Filter Section -->
+            <div class="search-filter-section">
+                <!-- Filter Sidebar -->
+                <div class="filter-sidebar">
+                    <div class="filter-header">
+                        <h3>Filter</h3>
+                        <button class="clear-all-btn">Clear All</button>
+                    </div>
+
+                    <!-- Job Type Filter -->
+                    <div class="filter-group">
+                        <h4>Job Type</h4>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" value="contract">
+                                <span class="checkmark"></span>
+                                Contract
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="part-time">
+                                <span class="checkmark"></span>
+                                Part-Time
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="full-time">
+                                <span class="checkmark"></span>
+                                Full-Time
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="internship">
+                                <span class="checkmark"></span>
+                                Internship
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Experience Filter -->
+                    <div class="filter-group">
+                        <h4>Experience</h4>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" value="less-than-year">
+                                <span class="checkmark"></span>
+                                Less than a year
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="1-3-years">
+                                <span class="checkmark"></span>
+                                1-3 years
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="3-5-years">
+                                <span class="checkmark"></span>
+                                3-5 years
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="5-10-years">
+                                <span class="checkmark"></span>
+                                5-10 years
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="more-than-10">
+                                <span class="checkmark"></span>
+                                > 10 years
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Work Styles Filter -->
+                    <div class="filter-group">
+                        <h4>Work styles</h4>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" value="remote">
+                                <span class="checkmark"></span>
+                                Remote
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="onsite">
+                                <span class="checkmark"></span>
+                                Onsite
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="main-content">
+                    <!-- Search Bar -->
+                    <div class="search-section">
+                        <div class="search-inputs">
+                            <div class="search-input-group">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="job-search" placeholder="Finance" value="Finance">
+                            </div>
+                            <div class="location-input-group">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" class="location-search" placeholder="Jakarta, Indonesia" value="Jakarta, Indonesia">
+                            </div>
+                            <button class="search-btn">Search</button>
+                        </div>
+                        <div class="search-results-info">
+                            <span>Showing <strong>100</strong> Jobs <strong>Finance</strong> in <strong>Jakarta, Indonesia</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Job Listings -->
+                    <div class="job-listings" id="job-listings">
+                        <!-- Job listings will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="load-more-section">
+                        <button class="load-more-btn" id="load-more-btn">Load More Jobs</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Detail Modal -->
+    <div id="job-modal" class="job-modal">
+        <div class="job-modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="job-detail-content">
+                <!-- Job detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal-container"></div>
+
+    <div id="feedback-modal-container"></div>
+
+    <div id="footer-container"></div>
+
+    <!-- Custom JavaScript -->
+    <script src="assets/script/script.js"></script>
+    <script src="assets/script/loadHeaderFooter.js"></script>
+    <script src="assets/script/vacancies.js"></script>
+    <script>
+    loadHeaderFooter(function() {
+        if (typeof LoginModal !== 'undefined' && LoginModal.init) LoginModal.init();
+        if (typeof MobileMenu !== 'undefined' && MobileMenu.init) MobileMenu.init();
+        if (typeof CounselorManager !== 'undefined' && CounselorManager.init) CounselorManager.init();
+        if (typeof BookingManager !== 'undefined' && BookingManager.init) BookingManager.init();
+        if (typeof FeedbackWidget !== 'undefined' && FeedbackWidget.init) FeedbackWidget.init();
+        if (typeof VacanciesManager !== 'undefined' && VacanciesManager.init) VacanciesManager.init();
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Company Profile - Pusat Karier UIN Syarif Hidayatullah</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/style/styles.css">
+    <link rel="stylesheet" href="assets/style/company-profile.css">
+    <link rel="shortcut icon" href="assets/image/Logo/icon.png" type="image/x-icon">
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <!-- Company Profile Section -->
+    <section class="company-profile-page">
+        <div class="container">
+            <!-- Company Header -->
+            <div class="company-header">
+                <div class="company-logo-section">
+                    <div class="company-logo" id="company-logo">
+                        <!-- Logo will be populated by JavaScript -->
+                    </div>
+                    <div class="company-basic-info">
+                        <h1 class="company-name" id="company-name">Loading...</h1>
+                        <p class="company-location" id="company-location">Loading...</p>
+                        <div class="company-stats">
+                            <span class="stat-item">
+                                <i class="fas fa-briefcase"></i>
+                                <span id="vacancy-count">Loading...</span>
+                            </span>
+                            <span class="stat-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Latest Post <span id="latest-post">Loading...</span></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Content -->
+            <div class="company-content">
+                <!-- Company Description -->
+                <div class="company-description">
+                    <h2>Description</h2>
+                    <div id="company-description-content">
+                        <!-- Description will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Current Job Openings -->
+                <div class="current-openings">
+                    <div class="current-openings-list" id="current-openings">
+                        <!-- Job openings will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Other Jobs Section -->
+                <div class="other-jobs-section">
+                    <h2>Other Jobs</h2>
+                    <div class="other-jobs-grid" id="other-jobs-grid">
+                        <!-- Other jobs will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="login-modal-container"></div>
+
+    <div id="feedback-modal-container"></div>
+
+    <div id="footer-container"></div>
+
+    <!-- Custom JavaScript -->
+    <script src="assets/script/script.js"></script>
+    <script src="assets/script/loadHeaderFooter.js"></script>
+    <script src="assets/script/company-profile.js"></script>
+    <script>
+    loadHeaderFooter(function() {
+        if (typeof LoginModal !== 'undefined' && LoginModal.init) LoginModal.init();
+        if (typeof MobileMenu !== 'undefined' && MobileMenu.init) MobileMenu.init();
+        if (typeof CounselorManager !== 'undefined' && CounselorManager.init) CounselorManager.init();
+        if (typeof BookingManager !== 'undefined' && BookingManager.init) BookingManager.init();
+        if (typeof FeedbackWidget !== 'undefined' && FeedbackWidget.init) FeedbackWidget.init();
+        if (typeof CompanyProfileManager !== 'undefined' && CompanyProfileManager.init) CompanyProfileManager.init();
+    });
+    </script>
+</body>
+</html>

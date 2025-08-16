@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pusat Karier - UIN Syarif Hidayatullah</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/style/styles.css">
+    <link rel="stylesheet" href="assets/style/companies.css">
+    <link rel="shortcut icon" href="assets/image/Logo/icon.png" type="image/x-icon">
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <!-- Companies Section -->
+    <section class="companies-page">
+        <div class="container">
+            <!-- Search Section -->
+            <div class="search-section">
+                <!-- Category Dropdown -->
+                <div class="category-filter-container">
+                    <div class="category-trigger" id="categoryTrigger">
+                        <i class="fas fa-search"></i>
+                        <span class="selected-category" id="selectedCategory">All Category</span>
+                        <i class="fas fa-chevron-right dropdown-arrow" id="dropdownArrow"></i>
+                    </div>
+                <div class="category-menu" id="categoryMenu">
+                        <div class="category-option" data-value="all">All Category</div>
+                        <div class="category-option" data-value="national">National/Domestic Category</div>
+                        <div class="category-option" data-value="multinational">Multinational Company</div>
+                    </div>
+                </div>
+                
+                <!-- Location Input -->
+                <div class="location-input">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" placeholder="Jakarta, Indonesia" value="Jakarta, Indonesia">
+                </div>
+            </div>
+
+            <!-- Companies Grid -->
+            <div class="companies-grid" id="companies-grid">
+                <!-- Company cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-section">
+                <button class="load-more-btn" id="load-more-btn">Load More Companies</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="login-modal-container"></div>
+
+    <div id="feedback-modal-container"></div>
+
+    <div id="footer-container"></div>
+
+    <!-- Custom JavaScript -->
+    <script src="assets/script/script.js"></script>
+    <script src="assets/script/loadHeaderFooter.js"></script>
+    <script src="assets/script/companies.js"></script>
+    <script>
+    loadHeaderFooter(function() {
+        if (typeof LoginModal !== 'undefined' && LoginModal.init) LoginModal.init();
+        if (typeof MobileMenu !== 'undefined' && MobileMenu.init) MobileMenu.init();
+        if (typeof CounselorManager !== 'undefined' && CounselorManager.init) CounselorManager.init();
+        if (typeof BookingManager !== 'undefined' && BookingManager.init) BookingManager.init();
+        if (typeof FeedbackWidget !== 'undefined' && FeedbackWidget.init) FeedbackWidget.init();
+        if (typeof CompaniesManager !== 'undefined' && CompaniesManager.init) CompaniesManager.init();
+    });
+    </script>
+</body>
+</html>
