@@ -1,0 +1,433 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+}
+
+/* Main content */
+.companies-page {
+    padding: 5rem 0;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Search Section */
+.search-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Category Filter - PERBAIKAN UTAMA */
+.category-filter-container {
+    position: relative;
+    width: 100%;
+    z-index: 10; /* Pastikan di atas elemen lain */
+}
+
+.category-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 48px;
+    width: 100%;
+    position: relative;
+    z-index: 11;
+    user-select: none; /* Mencegah text selection */
+}
+
+.category-trigger:hover {
+    border-color: #393981;
+    box-shadow: 0 0 0 3px rgba(57, 57, 129, 0.1);
+}
+
+.category-trigger.open {
+    border-color: #393981;
+    box-shadow: 0 0 0 3px rgba(57, 57, 129, 0.1);
+    background-color: #fafafb;
+}
+
+.category-trigger i.fas.fa-search {
+    color: #6b7280;
+    flex-shrink: 0;
+    pointer-events: none; /* Mencegah interferensi pada icon */
+}
+
+.selected-category {
+    flex: 1;
+    font-size: 0.95rem;
+    color: #374151;
+    font-weight: 500;
+    text-align: left;
+    pointer-events: none; /* Mencegah interferensi */
+    user-select: none;
+}
+
+.dropdown-arrow {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    pointer-events: none; /* Mencegah interferensi */
+    transform-origin: center;
+}
+
+.category-trigger.open .dropdown-arrow {
+    transform: rotate(90deg);
+    color: #393981;
+}
+
+.category-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    max-height: 300px;
+    overflow-y: auto;
+    /* Pastikan menu bisa diklik */
+    pointer-events: none;
+}
+
+.category-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto; /* Enable clicking when visible */
+}
+
+.category-option {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #374151;
+    font-weight: 500;
+    border-bottom: 1px solid #f3f4f6;
+    transition: all 0.2s ease;
+    position: relative;
+    background: white;
+    display: block;
+    width: 100%;
+    user-select: none;
+    /* Pastikan clickable */
+    pointer-events: auto;
+}
+
+.category-option:last-child {
+    border-bottom: none;
+}
+
+.category-option:hover {
+    background-color: #f8f9fa;
+    color: #393981;
+}
+
+.category-option.active {
+    background-color: #393981;
+    color: white;
+    font-weight: 600;
+}
+
+.category-option.active:hover {
+    background-color: #2d2b6b;
+}
+
+/* Tambahan untuk memastikan dropdown berfungsi di mobile */
+@media (pointer: coarse) {
+    .category-trigger {
+        min-height: 52px;
+        padding: 14px 16px;
+    }
+    
+    .category-option {
+        padding: 16px;
+        font-size: 1rem;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .category-menu {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Location Input */
+.location-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.location-input i {
+    position: absolute;
+    left: 16px;
+    color: #6b7280;
+    z-index: 2;
+    font-size: 0.9rem;
+}
+
+.location-input input {
+    width: 100%;
+    padding: 12px 16px 12px 45px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-height: 48px;
+}
+
+.location-input input:focus {
+    outline: none;
+    border-color: #393981;
+    box-shadow: 0 0 0 3px rgba(57, 57, 129, 0.1);
+}
+
+/* Companies Grid */
+.companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.company-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.company-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.company-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.company-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.company-logo.jet { background: #dc2626; }
+.company-logo.cox { background: #0ea5e9; }
+.company-logo.zee { background: #7c3aed; }
+.company-logo.lg { background: #dc2626; }
+.company-logo.fashion { background: #1f2937; }
+.company-logo.weather { background: #0284c7; }
+.company-logo.tokopedia { background: #42b883; }
+.company-logo.gojek { background: #00aa13; }
+.company-logo.shopee { background: #ff5722; }
+.company-logo.mandiri { background: #003d7a; }
+.company-logo.bca { background: #0066cc; }
+.company-logo.unilever { background: #0070ba; }
+
+.company-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+}
+
+.company-location {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.company-stats {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    text-align: right;
+}
+
+.vacancy-count {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.latest-post {
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+/* Load More Section */
+.load-more-section {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.load-more-btn {
+    background: #f3f4f6;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.load-more-btn:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+}
+
+.load-more-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Debug styles untuk memastikan dropdown terlihat */
+.category-menu.show {
+    border: 2px solid #393981 !important;
+}
+
+.category-option:hover {
+    background-color: #f0f0ff !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0.8rem 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .search-container {
+        width: 100%;
+        margin: 0.8rem 0 0 0;
+        order: 3;
+    }
+    
+    .search-section {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin: 1rem;
+        padding: 1rem;
+    }
+    
+    .companies-page {
+        padding: 1rem 0;
+        margin-top: 120px;
+    }
+    
+    .companies-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .company-card {
+        padding: 1rem;
+    }
+    
+    .company-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .company-stats {
+        position: static;
+        text-align: left;
+        margin-top: 1rem;
+    }
+    
+    /* Mobile-specific dropdown fixes */
+    .category-filter-container {
+        z-index: 100;
+    }
+    
+    .category-menu {
+        z-index: 1001;
+        position: fixed;
+        left: 1rem;
+        right: 1rem;
+        top: auto;
+        max-width: none;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    .company-logo {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .company-info h3 {
+        font-size: 1.1rem;
+    }
+    
+    /* Extra small screen dropdown adjustments */
+    .category-menu {
+        left: 0.5rem;
+        right: 0.5rem;
+    }
+}
