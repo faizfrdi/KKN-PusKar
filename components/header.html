@@ -1,36 +1,95 @@
 <nav class="nav-container">
     <div class="logo">
-        <a href="index.html"><img src="assets/image/Logo/logo_navbar.png" alt="Pusat Karier Logo"></a>
+        <a href="index.html">
+            <img src="assets/image/Logo/logo_navbar.png" alt="Pusat Karier Logo">
+        </a>
     </div>
+    
     <div class="search-container">
         <i class="fas fa-search search-icon"></i>
         <input type="search" class="search-box" placeholder="Search">
     </div>
-    <div class="nav-menu">
-        <a href="index.html">Home</a>
+    
+    <div class="nav-menu" id="nav-menu">
+        <!-- Home -->
+        <a href="index.html" class="nav-link">
+            <span class="en">Home</span>
+            <span class="id">Beranda</span>
+        </a>
         
         <!-- Jobs Dropdown -->
         <div class="dropdown">
-            <a href="#" class="dropdown-trigger">Jobs</a>
+            <a href="#" class="dropdown-trigger">
+                <span class="en">Jobs</span>
+                <span class="id">Pekerjaan</span>
+            </a>
             <div class="dropdown-content">
-                <a href="vacancies.html">Vacancies</a>
-                <a href="companies.html">Companies</a>
+                <a href="vacancies.html">
+                    <span class="en">Vacancies</span>
+                    <span class="id">Lowongan Kerja</span>
+                </a>
+                <a href="companies.html">
+                    <span class="en">Companies</span>
+                    <span class="id">Perusahaan</span>
+                </a>
             </div>
         </div>
         
         <!-- Community Dropdown -->
         <div class="dropdown">
-            <a href="#" class="dropdown-trigger">Community</a>
+            <a href="#" class="dropdown-trigger">
+                <span class="en">Community</span>
+                <span class="id">Komunitas</span>
+            </a>
             <div class="dropdown-content">
-                <a href="events.html">Events</a>
-                <a href="news.html">News</a>
-                <a href="forum.html">Forum</a>
+                <a href="event.html">
+                    <span class="en">Events</span>
+                    <span class="id">Acara</span>
+                </a>
+                <a href="news.html">
+                    <span class="en">News</span>
+                    <span class="id">Berita</span>
+                </a>
+                <a href="forum.html">
+                    <span class="en">Forum</span>
+                    <span class="id">Forum</span>
+                </a>
             </div>
         </div>
         
-        <a href="konseling.html">Counseling</a>
-        <a href="tracer-study.html">Tracer Study</a>
-        <a href="about-us.html">About Us</a>
-        <a href="#">Login</a>
+        <!-- Counseling -->
+        <a href="konseling.html" class="nav-link">
+            <span class="en">Counseling</span>
+            <span class="id">Konseling</span>
+        </a>
+        
+        <!-- Tracer Study -->
+        <a href="tracer-study.html" class="nav-link">
+            <span class="en">Tracer Study</span>
+            <span class="id">Studi Lacak</span>
+        </a>
+        
+        <!-- About Us -->
+        <a href="about-us.html" class="nav-link">
+            <span class="en">About Us</span>
+            <span class="id">Tentang Kami</span>
+        </a>
+        
+        <!-- Language Switcher -->
+        <div class="navbar-language-switcher">
+            <button id="btn-en" class="lang-btn" title="English">EN</button>
+            <button id="btn-id" class="lang-btn" title="Indonesia">ID</button>
+        </div>
+        
+        <!-- Login -->
+        <a href="#" class="nav-link login-btn" onclick="event.preventDefault(); if(typeof window.AuthModal !== 'undefined') window.AuthModal.show();">
+            <span class="en">Login</span>
+            <span class="id">Masuk</span>
+        </a>
+    </div>
+    
+    <!-- Mobile Menu Toggle -->
+    <div class="menu-toggle" id="menu-toggle">
+        <i class="fas fa-bars"></i>
     </div>
 </nav>
