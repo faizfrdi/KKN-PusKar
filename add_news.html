@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tambah Berita</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #D9D9D9 0%, #4949b2ff 100%);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #866db4ff, #422189ff);
+      border: none;
+      text-align: center;
+      padding: 1.2rem;
+    }
+
+    .card-header h5 {
+      font-weight: 600;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .form-label {
+      font-weight: 500;
+    }
+
+    .form-control, textarea {
+      border-radius: 10px;
+    }
+
+    .btn-success {
+      border-radius: 10px;
+      padding: 0.7rem;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .btn-success:hover {
+      background-color: #1b1573ff;
+      transform: translateY(-2px);
+    }
+
+    .btn-link {
+      text-decoration: none;
+      font-weight: 500;
+      color: #fff;
+      background-color: rgba(0,0,0,0.3);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .btn-link:hover {
+      background-color: rgba(0,0,0,0.5);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg">
+          <div class="card-header text-white">
+            <h5 class="mb-0"> Tambah Berita Baru</h5>
+          </div>
+          <div class="card-body p-4">
+            <!-- Form ini tidak terhubung ke database karena PHP dihapus -->
+            <form method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label class="form-label">Judul Berita</label>
+                <input type="text" name="title" class="form-control" placeholder="Masukkan judul berita" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Kategori</label>
+                <input type="text" name="category" class="form-control" placeholder="Info, Tips, Pelatihan" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Gambar</label>
+                <input type="file" name="image" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Konten Berita</label>
+                <textarea name="content" rows="6" class="form-control" placeholder="Tulis isi berita di sini..." required></textarea>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success" style="background-color: #494399ff">Simpan Berita</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
