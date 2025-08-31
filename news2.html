@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Berita | Pusat Karier</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+  body { padding-top: 100px; }
+  .card-title { font-weight: bold; }
+  .filter-btn.active { background-color: #393981; color: white; }
+  .pagination { justify-content: center; }
+  .navbar-toggler { border: none; }
+  .navbar-toggler:focus { box-shadow: none; }
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255,255,255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+
+  /* ✅ Tambahan untuk mobile menu */
+  @media (max-width: 991px) {
+    .navbar-collapse {
+      background-color: white;  /* kasih background putih */
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .navbar-collapse .nav-link {
+      color: #393981 !important; /* teks jadi biru gelap biar kelihatan */
+    }
+    .navbar-collapse .nav-link:hover {
+      color: #000 !important;
+    }
+    .search-bar input {
+      border: 1px solid #ccc;
+    }
+  }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #393981; height: 80px;">
+      <div class="container">
+        <a class="navbar-brand" href="#"> 
+          <img style="width: 151px; height: 60px;" src="aset/img/logo puskar.png" alt="logo">
+        </a>
+
+        <!-- Tombol hamburger -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu navigasi -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <form id="searchForm" class="d-flex search-bar my-2 my-lg-0">
+            <input id="searchInput" class="form-control search-input me-2" type="search" placeholder="Search" aria-label="Search">
+          </form>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link text-white" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Jobs</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Community</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Counseling</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Tracer Study</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">About Us</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  <!-- Detail News Section -->
+  <div class="container py-5">
+    <a href="news.html" class="btn btn-secondary back-btn">&larr; Kembali ke Berita</a>
+    
+    <div class="card shadow-sm p-4">
+      <img src="aset/img/P6.jpeg" alt="Gambar Berita">
+      <div class="card-body">
+        <h2 class="news-header">Pentingnya Magang untuk Menembus Pasar Kerja</h2>
+        <p class="text-muted">
+          <span class="badge bg-primary">Info</span> | 
+          <i class="bi bi-calendar3"></i> 12 Agustus 2025
+        </p>
+        <hr>
+            <article class="card" aria-labelledby="intro-heading">
+      <h2 id="intro-heading" class="small">Mengapa belajar online?</h2>
+      <p class="lead">
+        Di era digital, banyak keterampilan dapat dipelajari tanpa biaya besar. Berikut daftar platform yang menyediakan konten berkualitas — cocok untuk pemula hingga tingkat menengah. Setiap platform disertai ringkasan topik utama, keunggulan, dan tautan.
+      </p>
+
+      <h3>Rekomendasi Utama</h3>
+      <ul class="reco">
+        <li>
+          <span class="site-title">Coursera</span>
+          <span class="tag">akademis & profesional</span>
+          <div class="small">Kursus dari universitas terkemuka; banyak materi gratis (sertifikat berbayar).</div>
+        </li>
+        <li>
+          <span class="site-title">edX</span>
+          <span class="tag">akademik & sertifikat</span>
+          <div class="small">Kursus berkualitas dari institusi besar seperti Harvard & MIT; audit gratis tersedia.</div>
+        </li>
+        <li>
+          <span class="site-title">Khan Academy</span>
+          <span class="tag">fundamental</span>
+          <div class="small">Bagus untuk dasar matematika, sains, ekonomi, dan pengantar ilmu komputer.</div>
+        </li>
+        <li>
+          <span class="site-title">Duolingo</span>
+          <span class="tag">bahasa</span>
+          <div class="small">Belajar bahasa asing dengan cara gamified — cocok untuk pemula.</div>
+        </li>
+        <li>
+          <span class="site-title">Codecademy</span>
+          <span class="tag">coding</span>
+          <div class="small">Interaktif untuk belajar Python, JavaScript, HTML/CSS; ada materi gratis dan berbayar.</div>
+        </li>
+        <li>
+          <span class="site-title">Skillshare (kelas gratis)</span>
+          <span class="tag">kreatif</span>
+          <div class="small">Banyak kelas kreatif—desain, fotografi, ilustrasi; sebagian konten gratis.</div>
+        </li>
+        <li>
+          <span class="site-title">YouTube Learning</span>
+          <span class="tag">video edukasi</span>
+          <div class="small">Channel edukasi berkualitas untuk topik apa saja: teknologi, hobi, bisnis, dan tutorial praktis.</div>
+        </li>
+        <li>
+          <span class="site-title">FutureLearn</span>
+          <span class="tag">kursus singkat</span>
+          <div class="small">Kursus fleksibel dari universitas & lembaga internasional; banyak pilihan gratis.</div>
+        </li>
+      </ul>
+
+      <h3>Ringkasan: Perbandingan Singkat</h3>
+      <table aria-label="Ringkasan website belajar">
+        <thead>
+          <tr>
+            <th>Website</th>
+            <th>Topik Utama</th>
+            <th>Cocok untuk</th>
+            <th>Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Coursera</td>
+            <td>Data, bisnis, teknologi</td>
+            <td>Pelajar & profesional</td>
+            <td>Audit gratis; sertifikat berbayar</td>
+          </tr>
+          <tr>
+            <td>edX</td>
+            <td>Ilmu komputer, sains, humaniora</td>
+            <td>Orang yg ingin dasar akademis</td>
+            <td>Kursus universitas; audit gratis</td>
+          </tr>
+          <tr>
+            <td>Khan Academy</td>
+            <td>Matematika, sains, ekonomi</td>
+            <td>Siswa & pemula</td>
+            <td>Materi dasar yang mudah dipahami</td>
+          </tr>
+          <tr>
+            <td>Duolingo</td>
+            <td>Bahasa asing</td>
+            <td>Pemula & latihan harian</td>
+            <td>Belajar seperti bermain game</td>
+          </tr>
+          <tr>
+            <td>Codecademy</td>
+            <td>Programming</td>
+            <td>Pemula coding</td>
+            <td>Latihan interaktif</td>
+          </tr>
+          <tr>
+            <td>Skillshare</td>
+            <td>Desain, foto, video</td>
+            <td>Kreator & freelancer</td>
+            <td>Banyak kelas kreatif (beberapa gratis)</td>
+          </tr>
+          <tr>
+            <td>YouTube</td>
+            <td>Segala topik</td>
+            <td>Belajar cepat & visual</td>
+            <td>Ragam channel edukasi, tutorial praktis</td>
+          </tr>
+          <tr>
+            <td>FutureLearn</td>
+            <td>Kesehatan, budaya, bisnis</td>
+            <td>Pembelajar fleksibel</td>
+            <td>Kursus singkat dari institusi global</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <br>
+      <h3>Tips agar efektif saat belajar online</h3>
+      <ol>
+        <li>Tetapkan tujuan belajar yang spesifik (mis. "Belajar Python dasar dalam 6 minggu").</li>
+        <li>Jadwalkan waktu harian/mingguan dan catat progres.</li>
+        <li>Gabungkan teori & praktik — kerjakan proyek kecil untuk mengaplikasikan ilmu.</li>
+        <li>Gunakan komunitas (forum, Discord, grup lokal) untuk tanya & berbagi.</li>
+        <li>Evaluasi kembali tujuan setelah 4–6 minggu; sesuaikan jalur belajar jika perlu.</li>
+      </ol>
+
+      <p class="small">
+        Catatan: Sebagian platform menyediakan banyak materi gratis, namun beberapa fitur lanjutan atau sertifikat biasanya berbayar.
+      </p>
+    </article>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
